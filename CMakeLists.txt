@@ -42,6 +42,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/include)
 
 add_executable(renderest
   src/main.cpp
+  src/Window.cpp
 )
 
 target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )
