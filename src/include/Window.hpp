@@ -1,7 +1,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <GLFW/glfw3.h> // Included here because all the possible Window.cpp definition should use GLFW
+#include <functional>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 class Window {
 protected:
@@ -11,8 +13,12 @@ public:
   Window(int width, int height, const char* title);
   ~Window();
 
-  bool shouldClose();
+  GLFWwindow* getWindow();
 
+  void run(std::function<void()> renderFunction);
+
+private:
+  bool shouldClose();
   void updateFrame();
 };
 

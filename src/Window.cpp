@@ -16,7 +16,7 @@ Window::Window(int width, int height, const char* title) : window(nullptr) {
 
   this->window = glfwCreateWindow(width, height, title, nullptr, nullptr);
   if (this->window == nullptr) {
-    std::cout << "Failed to create GLFW window" << std::endl;
+    std::cerr << "ERROR:WINDOW::GLFW_CREATE_WINDOW_FAILED" << std::endl;
     glfwTerminate();
     return;
   }
@@ -38,4 +38,19 @@ bool Window::shouldClose() {
 void Window::updateFrame() {
   glfwSwapBuffers(this->window);
   glfwPollEvents();
+}
+
+GLFWwindow* Window::getWindow() {
+  return this->window;
+}
+
+void Window::run(std::function<void()> renderFunction) {
+  while (!shouldClose()) {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    renderFunction();
+
+    this->updateFrame();
+  }
 }
