@@ -16,6 +16,9 @@ protected:
   glm::vec3 cameraFront;
   glm::vec3 cameraUp;
   float speed = 2.5f;
+  float pitch = 0.0f;
+  float yaw = -90.0f;
+  float moveSensitivity = 0.1f;
 
 public:
   Camera(Shader& shader);
@@ -24,6 +27,8 @@ public:
   void moveBackward(float delta = 1);
   void moveLeft(float delta = 1);
   void moveRight(float delta = 1);
+
+  void lookAround(float xOffset, float yOffset);
 
   void update();
 };

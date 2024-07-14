@@ -30,20 +30,82 @@ int main() {
   window.setCamera(&camera);
 
   float vertices[] = {
-    -0.5f, -0.5f, 0.0f, // left vertex
-    0.5f, -0.5f, 0.0f, // right vertex
-    0.0f, 0.5f, 0.0f, // top vertex
+   // Positions          Texture coords
+   -0.5f, -0.5f, -0.5f, // 0.0f, 0.0f,
+    0.5f, -0.5f, -0.5f, // 1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+    0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+   -0.5f,  0.5f, -0.5f, // 0.0f, 1.0f,
+   -0.5f, -0.5f, -0.5f, // 0.0f, 0.0f,
+
+   -0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, // 1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, // 1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f, // 1.0f, 1.0f,
+   -0.5f,  0.5f,  0.5f, // 0.0f, 1.0f,
+   -0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+
+   -0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+   -0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+   -0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+   -0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+   -0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+   -0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+
+    0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+    0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+    0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+    0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+
+   -0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+    0.5f, -0.5f, -0.5f, // 1.0f, 1.0f,
+    0.5f, -0.5f,  0.5f, // 1.0f, 0.0f,
+    0.5f, -0.5f,  0.5f, // 1.0f, 0.0f,
+   -0.5f, -0.5f,  0.5f, // 0.0f, 0.0f,
+   -0.5f, -0.5f, -0.5f, // 0.0f, 1.0f,
+
+   -0.5f,  0.5f, -0.5f, // 0.0f, 1.0f,
+    0.5f,  0.5f, -0.5f, // 1.0f, 1.0f,
+    0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+    0.5f,  0.5f,  0.5f, // 1.0f, 0.0f,
+   -0.5f,  0.5f,  0.5f, // 0.0f, 0.0f,
+   -0.5f,  0.5f, -0.5f, // 0.0f, 1.0f
   };
 
-  Object triangle(shader, vertices, sizeof(vertices));
+  Object cube(shader, vertices, sizeof(vertices));
 
 
   window.run(
-    [&shader, &triangle]() {
+    [&shader, &cube]() {
       shader.use();
-      triangle.draw();
+
+      cube.translate(glm::vec3(0.5f, -0.5f, 0.0f));
+      float value = static_cast<float>((sin(glfwGetTime()) + 1) / 2);
+      cube.scale(glm::vec3(value, value, value));
+      cube.rotate((float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+      cube.draw();
     }
   );
 
   return 0;
 }
+
+/**
+ * classe che gestisce openGL :
+-Inizializza la finestra
+- gestione callback
+- gestione input keyboard / mouse
+- distrugge la finestra in chiusura
+- Renderizza gli oggetti
+
+classe che definisce le figure(es quadrato 2D, cubo 3D, triangolo 2D ecc) :
+  -Definisce i vertici / indici
+  - Crea o buffer
+  - Assegna le textures
+
+  classe che gestisce la camera
+  - Definisce la lookAt matrix
+  - Gestisce i movimenti
+ */

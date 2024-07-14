@@ -22,6 +22,11 @@ Window::Window(int width, int height, const char* title) : window(nullptr) {
   }
 
   glfwMakeContextCurrent(window);
+
+  glfwSetWindowUserPointer(window, this);
+
+  this->lastX = width / 2;
+  this->lastY = height / 2;
 }
 
 Window::~Window() {
@@ -65,6 +70,8 @@ void Window::run(std::function<void()> renderFunction) {
 
 void Window::setCamera(Camera* camera) {
   this->camera = camera;
+
+  glfwSetCursorPosCallback(window, Window::cursorPositionCallback);
 }
 
 void Window::processInput() {
@@ -84,4 +91,26 @@ void Window::processInput() {
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     this->camera->moveRight(this->deltaTime);
   }
+}
+
+void Window::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
+  Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
+  if (instance) {
+    instance->updateCursorPosition(xpos, ypos);
+  }
+}
+
+void Window::updateCursorPosition(double xpos, double ypos) {
+  if (this->firstMouseMove) {
+    this->lastX = xpos;
+    this->lastY = ypos;
+    this->firstMouseMove = false;
+  }
+
+  float xOffset = xpos - this->lastX;
+  float yOffset = this->lastY - ypos; // reversed since y-coordinates range from bottom to top
+  this->lastX = xpos;
+  this->lastY = ypos;
+
+  this->camera->lookAround(xOffset, yOffset);
 }

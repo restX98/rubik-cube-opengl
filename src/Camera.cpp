@@ -9,6 +9,12 @@ Camera::Camera(Shader& shader) : shader(shader) {
 }
 
 void Camera::update() {
+  glm::vec3 direction;
+  direction.x = cos(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
+  direction.y = sin(glm::radians(this->pitch));
+  direction.z = sin(glm::radians(this->yaw)) * cos(glm::radians(this->pitch));
+  this->cameraFront = glm::normalize(direction);
+
   glm::mat4 view = glm::lookAt(
     this->cameraPos,
     this->cameraPos + this->cameraFront,
@@ -33,4 +39,14 @@ void Camera::moveLeft(float delta) {
 
 void Camera::moveRight(float delta) {
   this->cameraPos += glm::normalize(glm::cross(this->cameraFront, this->cameraUp)) * speed * delta;
+}
+
+void Camera::lookAround(float xOffset, float yOffset) {
+  yaw += xOffset * this->moveSensitivity;
+  pitch += yOffset * this->moveSensitivity;
+
+  if (pitch > 89.0f)
+    pitch = 89.0f;
+  if (pitch < -89.0f)
+    pitch = -89.0f;
 }

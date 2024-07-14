@@ -22,6 +22,7 @@ protected:
 
 public:
   Object(Shader& shader, float* vertices, int size);
+  // Object(float[] vertices, int[] indices);
   ~Object();
 
   void draw();

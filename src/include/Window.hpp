@@ -12,6 +12,9 @@ protected:
   float currentFrame = 0;
   float lastFrame = 0;
   float deltaTime = 0;
+  bool firstMouseMove = true;
+  float lastX;
+  float lastY;
 
   GLFWwindow* window;
   Camera* camera;
@@ -31,6 +34,8 @@ private:
   void updateFrame();
   void processInput();
 
+  static void cursorPositionCallback(GLFWwindow* window, double xpos, double ypos);
+  void updateCursorPosition(double xpos, double ypos);
 };
 
 #endif
