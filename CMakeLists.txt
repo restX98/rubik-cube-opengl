@@ -45,6 +45,7 @@ add_executable(renderest
   src/Window.cpp
   src/Shader.cpp
   src/Object.cpp
+  src/Camera.cpp
 )
 
 target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )

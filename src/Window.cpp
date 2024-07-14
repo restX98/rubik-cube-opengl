@@ -38,6 +38,10 @@ bool Window::shouldClose() {
 void Window::updateFrame() {
   glfwSwapBuffers(this->window);
   glfwPollEvents();
+
+  this->currentFrame = glfwGetTime();
+  this->deltaTime = this->currentFrame - this->lastFrame;
+  this->lastFrame = this->currentFrame;
 }
 
 GLFWwindow* Window::getWindow() {
@@ -46,11 +50,38 @@ GLFWwindow* Window::getWindow() {
 
 void Window::run(std::function<void()> renderFunction) {
   while (!shouldClose()) {
+    this->processInput();
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    this->camera->update();
 
     renderFunction();
 
     this->updateFrame();
+  }
+}
+
+void Window::setCamera(Camera* camera) {
+  this->camera = camera;
+}
+
+void Window::processInput() {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, true);
+  }
+
+  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+    this->camera->moveForward(this->deltaTime);
+  }
+  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+    this->camera->moveBackward(this->deltaTime);
+  }
+  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+    this->camera->moveLeft(this->deltaTime);
+  }
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    this->camera->moveRight(this->deltaTime);
   }
 }

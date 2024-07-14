@@ -4,6 +4,7 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "Object.hpp"
+#include "Camera.hpp"
 #include "constants.hpp"
 
 int main() {
@@ -25,13 +26,17 @@ int main() {
 
   Shader shader(SHADERS_PATH "shader.vert", SHADERS_PATH "shader.frag");
 
+  Camera camera(shader);
+  window.setCamera(&camera);
+
   float vertices[] = {
     -0.5f, -0.5f, 0.0f, // left vertex
     0.5f, -0.5f, 0.0f, // right vertex
     0.0f, 0.5f, 0.0f, // top vertex
   };
 
-  Object triangle(vertices, sizeof(vertices));
+  Object triangle(shader, vertices, sizeof(vertices));
+
 
   window.run(
     [&shader, &triangle]() {
