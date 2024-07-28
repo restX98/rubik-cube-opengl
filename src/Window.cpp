@@ -54,11 +54,13 @@ GLFWwindow* Window::getWindow() {
 }
 
 void Window::run(std::function<void()> renderFunction) {
+  glEnable(GL_DEPTH_TEST);
+
   while (!shouldClose()) {
     this->processInput();
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     this->camera->update();
 

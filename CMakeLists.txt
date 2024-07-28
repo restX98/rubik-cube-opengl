@@ -44,8 +44,10 @@ add_executable(renderest
   src/main.cpp
   src/Window.cpp
   src/Shader.cpp
-  src/Object.cpp
   src/Camera.cpp
+  src/Mesh.cpp
+  src/Model.cpp
+  src/Square.cpp
 )
 
 target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )
