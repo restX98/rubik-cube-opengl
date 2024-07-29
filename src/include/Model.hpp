@@ -14,21 +14,20 @@ class Model {
 protected:
   Shader* shader;
 
-  std::vector<Mesh> meshes;
-
-private:
   glm::vec3 translation;
   float rotationAngle;
   glm::vec3 rotationAxis;
   glm::vec3 scaling;
 
   void transform();
+
+private:
   void resetTransformation();
 
 public:
   Model(Shader* shader);
 
-  void draw();
+  virtual void draw();
 
   void translate();
   void translate(glm::vec3 translation);

@@ -39,3 +39,7 @@ void Mesh::draw() {
   glDrawElements(GL_TRIANGLES, indexes.size(), GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
+
+void Mesh::updateVertices(std::vector<Vertex> vertices) {
+  this->vertices = vertices;
+}

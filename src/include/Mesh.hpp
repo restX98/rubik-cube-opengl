@@ -27,6 +27,7 @@ public:
   Mesh(Shader& shader, std::vector<Vertex> vertices, std::vector<unsigned int> indexes);
   ~Mesh();
 
+  void updateVertices(std::vector<Vertex> vertices);
   void setup();
   void draw();
 };

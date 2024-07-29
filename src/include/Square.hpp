@@ -11,11 +11,15 @@
 
 class Square : public Model {
 private:
+  std::vector<Mesh> meshes;
   std::vector<Vertex> generateVertices(glm::vec3 color);
 
 public:
   Square(Shader* shader, glm::vec3 color);
   Square(Shader* shader);
+
+  void draw();
+  void setColor(glm::vec3 color);
 };
 
 #endif

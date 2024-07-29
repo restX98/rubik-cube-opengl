@@ -48,6 +48,7 @@ add_executable(renderest
   src/Mesh.cpp
   src/Model.cpp
   src/Square.cpp
+  src/Cube.cpp
 )
 
 target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )

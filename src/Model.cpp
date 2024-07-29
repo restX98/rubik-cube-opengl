@@ -4,18 +4,12 @@ Model::Model(Shader* shader) : shader(shader) {
   this->resetTransformation();
 }
 
-void Model::draw() {
-  this->transform();
-
-  for (int i = 0; i < meshes.size(); i++) {
-    meshes[i].draw();
-  }
-}
-
 void Model::transform() {
   glm::mat4 model = glm::mat4(1.0f);
   model = glm::translate(model, this->translation);
-  model = glm::rotate(model, this->rotationAngle, this->rotationAxis);
+  if (this->rotationAngle != 0) {
+    model = glm::rotate(model, glm::radians(this->rotationAngle), this->rotationAxis);
+  }
   model = glm::scale(model, this->scaling);
 
   this->shader->setMat4("model", model);
@@ -29,7 +23,7 @@ void Model::translate(glm::vec3 translation) {
 }
 
 void Model::rotate() {
-  this->rotate(0.0f, glm::vec3(1.0f));
+  this->rotate(0.0f, glm::vec3(0.0f));
 }
 void Model::rotate(float angle, glm::vec3 axis) {
   this->rotationAngle = angle;
@@ -48,3 +42,5 @@ void Model::resetTransformation() {
   this->rotate();
   this->scale();
 }
+
+void Model::draw() {}
