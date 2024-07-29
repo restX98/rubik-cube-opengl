@@ -1,1 +1,1 @@
-# RendeRest
+# Rubik Cube
