@@ -25,7 +25,7 @@ public:
 
   GLFWwindow* getWindow();
 
-  void run(std::function<void()> renderFunction);
+  void run(std::function<void(float)> renderFunction);
 
   void setCamera(Camera* camera);
 

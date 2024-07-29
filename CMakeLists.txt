@@ -49,6 +49,7 @@ add_executable(renderest
   src/Model.cpp
   src/Square.cpp
   src/Cube.cpp
+  src/RubikCube.cpp
 )
 
 target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )

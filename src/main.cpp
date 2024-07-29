@@ -4,8 +4,7 @@
 #include <vector>
 #include "Window.hpp"
 #include "Shader.hpp"
-#include "Square.hpp"
-#include "Cube.hpp"
+#include "RubikCube.hpp"
 #include "Camera.hpp"
 #include "constants.hpp"
 
@@ -31,16 +30,16 @@ int main() {
   Camera camera(shader);
   window.setCamera(&camera);
 
-  Cube cube(&shader);
-  cube.setFaceColor(Face::FRONT_FACE, glm::vec3(1.0f, 0.0f, 0.0f));
+  RubikCube rb(&shader);
 
-  cube.translate(glm::vec3(0.0f, 1.0f, -3.0f));
+  rb.translate(glm::vec3(0.0f, 0.0f, -5.0f));
 
   window.run(
-    [&shader, &cube]() {
+    [&shader, &rb](float deltaTime) {
       shader.use();
+      std::cout << deltaTime << "\n";
 
-      cube.draw();
+      rb.draw(deltaTime);
     }
   );
 

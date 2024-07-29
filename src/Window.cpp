@@ -53,7 +53,7 @@ GLFWwindow* Window::getWindow() {
   return this->window;
 }
 
-void Window::run(std::function<void()> renderFunction) {
+void Window::run(std::function<void(float)> renderFunction) {
   glEnable(GL_DEPTH_TEST);
 
   while (!shouldClose()) {
@@ -64,7 +64,7 @@ void Window::run(std::function<void()> renderFunction) {
 
     this->camera->update();
 
-    renderFunction();
+    renderFunction(this->deltaTime);
 
     this->updateFrame();
   }

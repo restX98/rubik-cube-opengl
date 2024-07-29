@@ -68,7 +68,7 @@ void Cube::setFaceColor(Face face, glm::vec3 color) {
     this->topFace->setColor(color);
     return;
   case Face::BOTTOM_FACE:
-    this->topFace->setColor(color);
+    this->bottomFace->setColor(color);
     return;
   }
 }
