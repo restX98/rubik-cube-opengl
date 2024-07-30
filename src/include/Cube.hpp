@@ -27,6 +27,8 @@ private:
   Square* topFace;
   Square* bottomFace;
 
+  float distanceToOrigin = 1.0f;
+
   void generateFaces();
 
 public:

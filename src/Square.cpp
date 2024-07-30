@@ -1,6 +1,6 @@
 #include <Square.hpp>
 
-Square::Square(Shader* shader, glm::vec3 color) : Model(shader) {
+Square::Square(Shader* shader, glm::vec3 color, Plane plane) : Model(shader), plane(plane) {
   std::vector<Vertex> vertices = generateVertices(color);
   Mesh m(*shader, vertices, { 0, 1, 2, 2, 3, 0 });
   this->meshes.push_back(m);
@@ -10,16 +10,32 @@ Square::Square(Shader* shader, glm::vec3 color) : Model(shader) {
   }
 }
 
-Square::Square(Shader* shader) : Square(shader, glm::vec3(0.0f, 0.0f, 0.0f)) {}
+Square::Square(Shader* shader, Plane plane) : Square(shader, glm::vec3(0.0f, 0.0f, 0.0f), plane) {}
 
 std::vector<Vertex> Square::generateVertices(glm::vec3 color) {
-  std::vector<Vertex> frontFaceVertices;
-  frontFaceVertices.push_back(Vertex({ glm::vec3(-0.5f, -0.5f, 0.0f), color }));  // Bottom-left
-  frontFaceVertices.push_back(Vertex({ glm::vec3(0.5f, -0.5f, 0.0f), color }));   // Bottom-right
-  frontFaceVertices.push_back(Vertex({ glm::vec3(0.5f, 0.5f, 0.0f), color }));    // Top-right
-  frontFaceVertices.push_back(Vertex({ glm::vec3(-0.5f, 0.5f, 0.0f), color }));   // Top-left
-
-  return frontFaceVertices;
+  std::vector<Vertex> vertices;
+  switch (this->plane) {
+  default:
+  case Plane::XY:
+    vertices.push_back(Vertex({ glm::vec3(-1.0f, -1.0f, 0.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(1.0f, -1.0f, 0.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(1.0f, 1.0f, 0.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(-1.0f, 1.0f, 0.0f), color }));
+    break;
+  case Plane::XZ:
+    vertices.push_back(Vertex({ glm::vec3(-1.0f, 0.0f, -1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(1.0f, 0.0f, -1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(1.0f, 0.0f, 1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(-1.0f, 0.0f, 1.0f), color }));
+    break;
+  case Plane::YZ:
+    vertices.push_back(Vertex({ glm::vec3(0.0f,-1.0f, -1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(0.0f, 1.0f, -1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(0.0f, 1.0f, 1.0f), color }));
+    vertices.push_back(Vertex({ glm::vec3(0.0f,-1.0f, 1.0f), color }));
+    break;
+  }
+  return vertices;
 }
 
 void Square::draw() {

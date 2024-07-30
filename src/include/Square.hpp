@@ -9,14 +9,21 @@
 #include <Mesh.hpp>
 #include <Shader.hpp>
 
+enum class Plane {
+  XY,
+  XZ,
+  YZ,
+};
+
 class Square : public Model {
 private:
+  Plane plane = Plane::XY;
   std::vector<Mesh> meshes;
   std::vector<Vertex> generateVertices(glm::vec3 color);
 
 public:
-  Square(Shader* shader, glm::vec3 color);
-  Square(Shader* shader);
+  Square(Shader* shader, glm::vec3 color, Plane plane = Plane::XY);
+  Square(Shader* shader, Plane plane = Plane::XY);
 
   void draw();
   void setColor(glm::vec3 color);

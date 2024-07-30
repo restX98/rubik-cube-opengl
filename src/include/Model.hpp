@@ -15,9 +15,13 @@ protected:
   Shader* shader;
 
   glm::vec3 translation;
-  float rotationAngle;
-  glm::vec3 rotationAxis;
-  glm::vec3 scaling;
+  float rotationAngleX;
+  float rotationForceX;
+  float rotationAngleY;
+  float rotationForceY;
+  float rotationAngleZ;
+  float rotationForceZ;
+  float scaling;
 
   void transform();
 
@@ -31,10 +35,12 @@ public:
 
   void translate();
   void translate(glm::vec3 translation);
-  void rotate();
-  void rotate(float angle, glm::vec3 axis);
+  void resetRotation();
+  void rotateX(float angle, float force = 1.0f);
+  void rotateY(float angle, float force = 1.0f);
+  void rotateZ(float angle, float force = 1.0f);
   void scale();
-  void scale(glm::vec3 scaling);
+  void scale(float scaling);
 };
 
 #endif
