@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(RendeRest)
+project(RubikCube)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -40,7 +40,7 @@ add_subdirectory(thirdparty/stb_image)
 
 include_directories(${PROJECT_SOURCE_DIR}/src/include)
 
-add_executable(renderest
+add_executable(RubikCube
   src/main.cpp
   src/Window.cpp
   src/Shader.cpp
@@ -52,7 +52,7 @@ add_executable(renderest
   src/RubikCube.cpp
 )
 
-target_link_libraries(renderest PRIVATE glfw glad stb_image glm::glm )
+target_link_libraries(RubikCube PRIVATE glfw glad stb_image glm::glm )
 
-target_compile_definitions(renderest PUBLIC SHADERS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/src/shaders/")
-target_compile_definitions(renderest PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/")
+target_compile_definitions(RubikCube PUBLIC SHADERS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/src/shaders/")
+target_compile_definitions(RubikCube PUBLIC RESOURCES_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources/")
