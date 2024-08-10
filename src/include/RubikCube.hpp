@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#define GAP 1.05f
+#define GAP 2.05f
 
 #define GREEN glm::vec3(0.0f, 0.6078f, 0.2823f)
 #define WHITE glm::vec3(1.0f, 1.0f, 1.0f)
@@ -18,6 +18,8 @@
 
 class RubikCube : public Model {
 private:
+  float speed = 2.5f;
+
   std::vector<std::vector<std::vector<Cube>>> cubes;
   void generate(Shader* shader);
   void align();

@@ -30,6 +30,7 @@ private:
   float distanceToOrigin = 1.0f;
 
   void generateFaces();
+  void relativeTransform(Square* face, glm::vec3 relativeTranslation);
 
 public:
   Cube(Shader* shader);

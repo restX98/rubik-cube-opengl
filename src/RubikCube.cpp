@@ -48,8 +48,19 @@ void RubikCube::transform() {
           cubes[i][j][k].setFaceColor(Face::RIGHT_FACE, glm::vec3(BLUE));
         }
 
+        glm::mat4 relativeTranslation = glm::mat4(1.0f);
+
+        relativeTranslation = glm::scale(relativeTranslation, glm::vec3(this->scaling, this->scaling, this->scaling));
+
+        relativeTranslation = glm::rotate(relativeTranslation, glm::radians(this->rotationAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
+        relativeTranslation = glm::rotate(relativeTranslation, glm::radians(this->rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
+        relativeTranslation = glm::rotate(relativeTranslation, glm::radians(this->rotationAngleZ), glm::vec3(0.0f, 0.0f, 1.0f));
+        cubeTranslation = glm::vec3(relativeTranslation * glm::vec4(cubeTranslation, 1.0f));
+
         cubes[i][j][k].translate(this->translation + cubeTranslation);
-        cubes[i][j][k].rotate(this->rotationAngle, this->rotationAxis);
+        cubes[i][j][k].rotateX(this->rotationAngleX);
+        cubes[i][j][k].rotateY(this->rotationAngleY);
+        cubes[i][j][k].rotateZ(this->rotationAngleZ);
         cubes[i][j][k].scale(this->scaling);
       }
     }
