@@ -47,9 +47,11 @@ add_executable(RubikCube
   src/Camera.cpp
   src/Mesh.cpp
   src/Model.cpp
+  src/Position.cpp
+  src/RelativePosition.cpp
   src/Square.cpp
   src/Cube.cpp
-  src/RubikCube.cpp
+  # src/RubikCube.cpp
 )
 
 target_link_libraries(RubikCube PRIVATE glfw glad stb_image glm::glm )

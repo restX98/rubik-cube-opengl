@@ -36,9 +36,14 @@ public:
   Cube(Shader* shader);
 
   void draw(float deltaTime = 0.0f) override;
-  void transform();
 
   void setFaceColor(Face face, glm::vec3 color);
+
+  void translate(float x, float y, float z) override;
+  void rotateX(float angle, float force = 1.0f) override;
+  void rotateY(float angle, float force = 1.0f) override;
+  void rotateZ(float angle, float force = 1.0f) override;
+  void scale(float scaling) override;
 };
 
 #endif

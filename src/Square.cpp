@@ -2,15 +2,15 @@
 
 Square::Square(Shader* shader, glm::vec3 color, Plane plane) : Model(shader), plane(plane) {
   std::vector<Vertex> vertices = generateVertices(color);
-  Mesh m(*shader, vertices, { 0, 1, 2, 2, 3, 0 });
-  this->meshes.push_back(m);
-
-  for (int i = 0; i < meshes.size(); i++) {
-    meshes[i].setup();
-  }
+  mesh = new Mesh(*shader, vertices, { 0, 1, 2, 2, 3, 0 });
+  mesh->setup();
 }
 
 Square::Square(Shader* shader, Plane plane) : Square(shader, glm::vec3(0.0f, 0.0f, 0.0f), plane) {}
+
+Square::~Square() {
+  delete mesh;
+}
 
 std::vector<Vertex> Square::generateVertices(glm::vec3 color) {
   std::vector<Vertex> vertices;
@@ -41,12 +41,10 @@ std::vector<Vertex> Square::generateVertices(glm::vec3 color) {
 void Square::draw(float deltaTime) {
   this->transform();
 
-  for (int i = 0; i < meshes.size(); i++) {
-    meshes[i].draw();
-  }
+  mesh->draw();
 }
 
 void Square::setColor(glm::vec3 color) {
-  this->meshes[0].updateVertices(generateVertices(color));
-  this->meshes[0].setup();
+  this->mesh->updateVertices(generateVertices(color));
+  this->mesh->setup();
 }

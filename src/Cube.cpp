@@ -17,45 +17,74 @@ void Cube::draw(float deltaTime) {
 
 void Cube::generateFaces() {
   this->frontFace = new Square(shader);
+  this->frontFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->frontFace->translate(0.0f, 0.0f, distanceToOrigin);
+
   this->backFace = new Square(shader);
+  this->backFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->backFace->translate(0.0f, 0.0f, -distanceToOrigin);
+
   this->leftFace = new Square(shader, Plane::YZ);
+  this->leftFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->leftFace->translate(-distanceToOrigin, 0.0f, 0.0f);
+
   this->rightFace = new Square(shader, Plane::YZ);
+  this->rightFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->rightFace->translate(distanceToOrigin, 0.0f, 0.0f);
+
   this->topFace = new Square(shader, Plane::XZ);
+  this->topFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->topFace->translate(0.0f, distanceToOrigin, 0.0f);
+
   this->bottomFace = new Square(shader, Plane::XZ);
+  this->bottomFace->setPivot(0.0f, 0.0f, 0.0f);
+  this->topFace->translate(0.0f, -distanceToOrigin, 0.0f);
 }
 
-void Cube::transform() {
-  if (!isDirty) return;
-  isDirty = false;
 
-  glm::vec3 frontFaceTranslation = glm::vec3(0.0f, 0.0f, distanceToOrigin);
-  glm::vec3 backFaceTranslation = glm::vec3(0.0f, 0.0f, -distanceToOrigin);
-  glm::vec3 leftFaceTranslation = glm::vec3(-distanceToOrigin, 0.0f, 0.0f);
-  glm::vec3 rightFaceTranslation = glm::vec3(distanceToOrigin, 0.0f, 0.0f);
-  glm::vec3 topFaceTranslation = glm::vec3(0.0f, distanceToOrigin, 0.0f);
-  glm::vec3 bottomFaceTranslation = glm::vec3(0.0f, -distanceToOrigin, 0.0f);
-
-  this->relativeTransform(this->frontFace, frontFaceTranslation);
-  this->relativeTransform(this->backFace, backFaceTranslation);
-  this->relativeTransform(this->leftFace, leftFaceTranslation);
-  this->relativeTransform(this->rightFace, rightFaceTranslation);
-  this->relativeTransform(this->topFace, topFaceTranslation);
-  this->relativeTransform(this->bottomFace, bottomFaceTranslation);
+void Cube::translate(float x, float y, float z) {
+  this->frontFace->setPivot(x, y, z);
+  this->backFace->setPivot(x, y, z);
+  this->leftFace->setPivot(x, y, z);
+  this->rightFace->setPivot(x, y, z);
+  this->topFace->setPivot(x, y, z);
+  this->bottomFace->setPivot(x, y, z);
 }
 
-void Cube::relativeTransform(Square* face, glm::vec3 relativeTranslation) {
-  glm::mat4 transformation = glm::mat4(1.0f);
-  transformation = glm::scale(transformation, glm::vec3(this->scaling, this->scaling, this->scaling));
-  transformation = glm::rotate(transformation, glm::radians(this->rotationAngleX), glm::vec3(1.0f, 0.0f, 0.0f));
-  transformation = glm::rotate(transformation, glm::radians(this->rotationAngleY), glm::vec3(0.0f, 1.0f, 0.0f));
-  transformation = glm::rotate(transformation, glm::radians(this->rotationAngleZ), glm::vec3(0.0f, 0.0f, 1.0f));
-  relativeTranslation = glm::vec3(transformation * glm::vec4(relativeTranslation, 1.0f));
+void Cube::rotateX(float angle, float force) {
+  this->frontFace->rotateX(angle, force);
+  this->backFace->rotateX(angle, force);
+  this->leftFace->rotateX(angle, force);
+  this->rightFace->rotateX(angle, force);
+  this->topFace->rotateX(angle, force);
+  this->bottomFace->rotateX(angle, force);
+}
 
-  face->translate(relativeTranslation + this->translation);
-  face->rotateX(this->rotationAngleX);
-  face->rotateY(this->rotationAngleY);
-  face->rotateZ(this->rotationAngleZ);
-  face->scale(this->scaling);
+void Cube::rotateY(float angle, float force) {
+  this->frontFace->rotateY(angle, force);
+  this->backFace->rotateY(angle, force);
+  this->leftFace->rotateY(angle, force);
+  this->rightFace->rotateY(angle, force);
+  this->topFace->rotateY(angle, force);
+  this->bottomFace->rotateY(angle, force);
+}
+
+void Cube::rotateZ(float angle, float force) {
+  this->frontFace->rotateZ(angle, force);
+  this->backFace->rotateZ(angle, force);
+  this->leftFace->rotateZ(angle, force);
+  this->rightFace->rotateZ(angle, force);
+  this->topFace->rotateZ(angle, force);
+  this->bottomFace->rotateZ(angle, force);
+}
+
+void Cube::scale(float scaling) {
+  this->frontFace->scale(scaling);
+  this->backFace->scale(scaling);
+  this->leftFace->scale(scaling);
+  this->rightFace->scale(scaling);
+  this->topFace->scale(scaling);
+  this->bottomFace->scale(scaling);
 }
 
 void Cube::setFaceColor(Face face, glm::vec3 color) {

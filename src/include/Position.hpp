@@ -1,42 +1,40 @@
-#ifndef MODEL_H
-#define MODEL_H
+#ifndef POSITION_H
+#define POSITION_H
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Mesh.hpp"
-#include "Position.hpp"
-#include "RelativePosition.hpp"
-
-#include <vector>
-
-class Model {
+class Position {
 private:
-  glm::mat4 model = glm::mat4(1.0f);
+  void resetTransformation();
 
 protected:
-  Shader* shader;
+  glm::mat4 model = glm::mat4(1.0f);
+  glm::vec3 translation;
+  float rotationAngleX;
+  float rotationForceX;
+  float rotationAngleY;
+  float rotationForceY;
+  float rotationAngleZ;
+  float rotationForceZ;
+  float scaling;
 
   bool isDirty = true;
 
-  void transform();
-
 public:
-  Model(Shader* shader);
-  ~Model();
+  Position();
 
-  Position* position;
+  virtual glm::mat4 getModel();
 
-  virtual void draw(float deltaTime = 0.0f);
-  void setPivot(float x, float y, float z);
-  void removePivot();
-
+  virtual void translate();
   virtual void translate(float x, float y, float z);
+  virtual void resetRotation();
   virtual void rotateX(float angle, float force = 1.0f);
   virtual void rotateY(float angle, float force = 1.0f);
   virtual void rotateZ(float angle, float force = 1.0f);
+  virtual void scale();
   virtual void scale(float scaling);
 };
 
