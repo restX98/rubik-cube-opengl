@@ -38,7 +38,7 @@ std::vector<Vertex> Square::generateVertices(glm::vec3 color) {
   return vertices;
 }
 
-void Square::draw() {
+void Square::draw(float deltaTime) {
   this->transform();
 
   for (int i = 0; i < meshes.size(); i++) {

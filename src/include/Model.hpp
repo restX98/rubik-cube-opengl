@@ -11,6 +11,9 @@
 #include <vector>
 
 class Model {
+private:
+  glm::mat4 model = glm::mat4(1.0f);
+
 protected:
   Shader* shader;
 
@@ -23,6 +26,8 @@ protected:
   float rotationForceZ;
   float scaling;
 
+  bool isDirty = true;
+
   void transform();
 
 private:
@@ -31,7 +36,7 @@ private:
 public:
   Model(Shader* shader);
 
-  virtual void draw();
+  virtual void draw(float deltaTime = 0.0f);
 
   void translate();
   void translate(glm::vec3 translation);

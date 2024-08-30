@@ -25,7 +25,7 @@ public:
   Square(Shader* shader, glm::vec3 color, Plane plane = Plane::XY);
   Square(Shader* shader, Plane plane = Plane::XY);
 
-  void draw();
+  void draw(float deltaTime = 0.0f) override;
   void setColor(glm::vec3 color);
 };
 

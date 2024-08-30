@@ -27,7 +27,7 @@ private:
 public:
   RubikCube(Shader* shader);
 
-  void draw(float delta);
+  void draw(float deltaTime = 0.0f) override;
   void transform();
 };
 

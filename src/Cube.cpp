@@ -4,7 +4,7 @@ Cube::Cube(Shader* shader) : Model(shader) {
   this->generateFaces();
 }
 
-void Cube::draw() {
+void Cube::draw(float deltaTime) {
   this->transform();
 
   this->frontFace->draw();
@@ -25,6 +25,9 @@ void Cube::generateFaces() {
 }
 
 void Cube::transform() {
+  if (!isDirty) return;
+  isDirty = false;
+
   glm::vec3 frontFaceTranslation = glm::vec3(0.0f, 0.0f, distanceToOrigin);
   glm::vec3 backFaceTranslation = glm::vec3(0.0f, 0.0f, -distanceToOrigin);
   glm::vec3 leftFaceTranslation = glm::vec3(-distanceToOrigin, 0.0f, 0.0f);

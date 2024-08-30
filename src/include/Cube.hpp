@@ -35,7 +35,7 @@ private:
 public:
   Cube(Shader* shader);
 
-  void draw();
+  void draw(float deltaTime = 0.0f) override;
   void transform();
 
   void setFaceColor(Face face, glm::vec3 color);

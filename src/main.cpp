@@ -31,7 +31,6 @@ int main() {
   window.setCamera(&camera);
 
   RubikCube rb(&shader);
-
   rb.translate(glm::vec3(0.0f, 0.0f, -5.0f));
 
   window.run(
@@ -39,7 +38,7 @@ int main() {
       shader.use();
       std::cout << deltaTime << "\n";
 
-      rb.draw(deltaTime);
+      rb.draw();
     }
   );
 

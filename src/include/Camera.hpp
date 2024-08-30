@@ -15,7 +15,7 @@ protected:
   glm::vec3 cameraPos;
   glm::vec3 cameraFront;
   glm::vec3 cameraUp;
-  float speed = 2.5f;
+  float speed = 7.0f;
   float pitch = 0.0f;
   float yaw = -90.0f;
   float moveSensitivity = 0.1f;

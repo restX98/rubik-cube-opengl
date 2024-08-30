@@ -19,6 +19,9 @@ void RubikCube::generate(Shader* shader) {
 }
 
 void RubikCube::transform() {
+  if (!isDirty) return;
+  isDirty = false;
+
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 3; j++) {
       for (int k = 0; k < 3; k++) {
@@ -67,7 +70,7 @@ void RubikCube::transform() {
   }
 }
 
-void RubikCube::draw(float delta) {
+void RubikCube::draw(float deltaTime) {
   this->transform();
 
   for (int i = 0; i < 3; ++i) {
