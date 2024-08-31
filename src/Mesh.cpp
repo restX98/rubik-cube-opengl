@@ -34,7 +34,9 @@ void Mesh::setup() {
   glBindVertexArray(0);
 }
 
-void Mesh::draw() {
+void Mesh::draw(glm::mat4 model) {
+  this->shader.setMat4("model", model);
+
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indexes.size(), GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);

@@ -51,7 +51,7 @@ add_executable(RubikCube
   src/RelativePosition.cpp
   src/Square.cpp
   src/Cube.cpp
-  # src/RubikCube.cpp
+  src/RubikCube.cpp
 )
 
 target_link_libraries(RubikCube PRIVATE glfw glad stb_image glm::glm )

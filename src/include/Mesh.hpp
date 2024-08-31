@@ -29,7 +29,7 @@ public:
 
   void updateVertices(std::vector<Vertex> vertices);
   void setup();
-  void draw();
+  void draw(glm::mat4 model = glm::mat4(1.0f));
 };
 
 

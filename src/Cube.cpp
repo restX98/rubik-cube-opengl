@@ -4,15 +4,28 @@ Cube::Cube(Shader* shader) : Model(shader) {
   this->generateFaces();
 }
 
-void Cube::draw(float deltaTime) {
-  this->transform();
+// void Cube::draw() {
+//   std::vector<glm::mat4> models;
+//   models.push_back(this->position->getModel());
 
-  this->frontFace->draw();
-  this->backFace->draw();
-  this->leftFace->draw();
-  this->rightFace->draw();
-  this->topFace->draw();
-  this->bottomFace->draw();
+//   this->frontFace->draw(models);
+//   this->backFace->draw(models);
+//   this->leftFace->draw(models);
+//   this->rightFace->draw(models);
+//   this->topFace->draw(models);
+//   this->bottomFace->draw(models);
+// }
+
+void Cube::draw(glm::mat4 model) {
+  // models.push_back(this->position->getModel());
+  glm::mat4 _model = model * this->position->getModel();
+
+  this->frontFace->draw(_model);
+  this->backFace->draw(_model);
+  this->leftFace->draw(_model);
+  this->rightFace->draw(_model);
+  this->topFace->draw(_model);
+  this->bottomFace->draw(_model);
 }
 
 void Cube::generateFaces() {
@@ -38,7 +51,7 @@ void Cube::generateFaces() {
 
   this->bottomFace = new Square(shader, Plane::XZ);
   this->bottomFace->setPivot(0.0f, 0.0f, 0.0f);
-  this->topFace->translate(0.0f, -distanceToOrigin, 0.0f);
+  this->bottomFace->translate(0.0f, -distanceToOrigin, 0.0f);
 }
 
 
@@ -49,42 +62,25 @@ void Cube::translate(float x, float y, float z) {
   this->rightFace->setPivot(x, y, z);
   this->topFace->setPivot(x, y, z);
   this->bottomFace->setPivot(x, y, z);
+
+  this->position->translate(x, y, z);
 }
 
 void Cube::rotateX(float angle, float force) {
-  this->frontFace->rotateX(angle, force);
-  this->backFace->rotateX(angle, force);
-  this->leftFace->rotateX(angle, force);
-  this->rightFace->rotateX(angle, force);
-  this->topFace->rotateX(angle, force);
-  this->bottomFace->rotateX(angle, force);
+  this->position->rotateX(angle, force);
 }
 
 void Cube::rotateY(float angle, float force) {
-  this->frontFace->rotateY(angle, force);
-  this->backFace->rotateY(angle, force);
-  this->leftFace->rotateY(angle, force);
-  this->rightFace->rotateY(angle, force);
-  this->topFace->rotateY(angle, force);
-  this->bottomFace->rotateY(angle, force);
+  this->position->rotateY(angle, force);
 }
 
 void Cube::rotateZ(float angle, float force) {
-  this->frontFace->rotateZ(angle, force);
-  this->backFace->rotateZ(angle, force);
-  this->leftFace->rotateZ(angle, force);
-  this->rightFace->rotateZ(angle, force);
-  this->topFace->rotateZ(angle, force);
-  this->bottomFace->rotateZ(angle, force);
+  this->position->rotateZ(angle, force);
+
 }
 
 void Cube::scale(float scaling) {
-  this->frontFace->scale(scaling);
-  this->backFace->scale(scaling);
-  this->leftFace->scale(scaling);
-  this->rightFace->scale(scaling);
-  this->topFace->scale(scaling);
-  this->bottomFace->scale(scaling);
+  this->position->scale(scaling);
 }
 
 void Cube::setFaceColor(Face face, glm::vec3 color) {

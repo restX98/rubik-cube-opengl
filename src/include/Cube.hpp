@@ -30,12 +30,11 @@ private:
   float distanceToOrigin = 1.0f;
 
   void generateFaces();
-  void relativeTransform(Square* face, glm::vec3 relativeTranslation);
 
 public:
   Cube(Shader* shader);
 
-  void draw(float deltaTime = 0.0f) override;
+  void draw(glm::mat4 model = glm::mat4(1.0f)) override;
 
   void setFaceColor(Face face, glm::vec3 color);
 

@@ -11,6 +11,7 @@ glm::mat4 Position::getModel() {
   isDirty = false;
 
   glm::mat4 _model = glm::mat4(1.0f);
+
   _model = glm::translate(_model, this->translation);
 
   glm::mat4 xRotationMatrix = glm::mat4(1.0f);

@@ -18,18 +18,16 @@ private:
 
 protected:
   Shader* shader;
+  Position* position;
 
   bool isDirty = true;
-
-  void transform();
 
 public:
   Model(Shader* shader);
   ~Model();
 
-  Position* position;
 
-  virtual void draw(float deltaTime = 0.0f);
+  virtual void draw(glm::mat4 model = glm::mat4(1.0f)) = 0;
   void setPivot(float x, float y, float z);
   void removePivot();
 

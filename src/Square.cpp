@@ -38,10 +38,10 @@ std::vector<Vertex> Square::generateVertices(glm::vec3 color) {
   return vertices;
 }
 
-void Square::draw(float deltaTime) {
-  this->transform();
+void Square::draw(glm::mat4 model) {
+  glm::mat4 _model = model * this->position->getModel();
 
-  mesh->draw();
+  mesh->draw(_model);
 }
 
 void Square::setColor(glm::vec3 color) {

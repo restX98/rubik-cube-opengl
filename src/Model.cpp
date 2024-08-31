@@ -6,12 +6,6 @@ Model::~Model() {
   delete position;
 }
 
-void Model::transform() {
-  this->shader->setMat4("model", this->position->getModel());
-}
-
-void Model::draw(float deltaTime) {}
-
 void Model::setPivot(float x, float y, float z) {
   RelativePosition* newPosix = new RelativePosition(*this->position, glm::vec3(x, y, z));
 

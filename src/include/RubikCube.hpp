@@ -16,19 +16,31 @@
 #define BLUE glm::vec3(0.0f, 0.2745f, 0.6784f)
 #define ORANGE glm::vec3(1.0f, 0.3451f, 0.0f)
 
+struct CubePosition {
+  Cube* cube;
+  int x;
+  int y;
+  int z;
+};
+
 class RubikCube : public Model {
 private:
   float speed = 2.5f;
 
-  std::vector<std::vector<std::vector<Cube>>> cubes;
+  std::vector<std::vector<std::vector<CubePosition*>>> cubes;
   void generate(Shader* shader);
   void align();
 
 public:
   RubikCube(Shader* shader);
 
-  void draw(float deltaTime = 0.0f) override;
-  void transform();
+  void draw(glm::mat4 model = glm::mat4(1.0f)) override;
+
+  void translate(float x, float y, float z) override;
+  void rotateX(float angle, float force = 1.0f) override;
+  void rotateY(float angle, float force = 1.0f) override;
+  void rotateZ(float angle, float force = 1.0f) override;
+  void scale(float scaling) override;
 };
 
 #endif
