@@ -23,6 +23,10 @@ protected:
 
   bool isDirty = true;
 
+  glm::vec3 xAxis = glm::vec3(1.0f, 0.0f, 0.0f);
+  glm::vec3 yAxis = glm::vec3(0.0f, 1.0f, 0.0f);
+  glm::vec3 zAxis = glm::vec3(0.0f, 0.0f, 1.0f);
+
 public:
   Position();
 
@@ -36,6 +40,14 @@ public:
   virtual void rotateZ(float angle, float force = 1.0f);
   virtual void scale();
   virtual void scale(float scaling);
+
+  virtual void setXAxis(glm::vec3 axis);
+  virtual void setYAxis(glm::vec3 axis);
+  virtual void setZAxis(glm::vec3 axis);
+
+  virtual glm::vec3 getXAxis();
+  virtual glm::vec3 getYAxis();
+  virtual glm::vec3 getZAxis();
 };
 
 #endif

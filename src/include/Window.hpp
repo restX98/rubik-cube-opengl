@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Camera.hpp"
+#include "RubikCube.hpp"
 
 class Window {
 protected:
@@ -18,6 +19,7 @@ protected:
 
   GLFWwindow* window;
   Camera* camera;
+  RubikCube* rubikCube;
 
 public:
   Window(int width, int height, const char* title);
@@ -28,6 +30,7 @@ public:
   void run(std::function<void(float)> renderFunction);
 
   void setCamera(Camera* camera);
+  void setRubikCube(RubikCube* rubikCube);
 
 private:
   bool shouldClose();

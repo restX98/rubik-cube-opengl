@@ -5,6 +5,7 @@
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "RubikCube.hpp"
+#include "Cube.hpp"
 #include "Camera.hpp"
 #include "constants.hpp"
 
@@ -30,15 +31,13 @@ int main() {
   Camera camera(shader);
   window.setCamera(&camera);
 
-  RubikCube rb(&shader);
-  rb.translate(glm::vec3(0.0f, 0.0f, -5.0f));
+  RubikCube rc(&shader);
+  window.setRubikCube(&rc);
 
   window.run(
-    [&shader, &rb](float deltaTime) {
+    [&shader, &rc](float deltaTime) {
       shader.use();
-      std::cout << deltaTime << "\n";
-
-      rb.draw();
+      rc.draw(deltaTime);
     }
   );
 

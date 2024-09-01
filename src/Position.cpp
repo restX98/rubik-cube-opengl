@@ -75,3 +75,27 @@ void Position::resetTransformation() {
   this->resetRotation();
   this->scale();
 }
+
+void Position::setXAxis(glm::vec3 axis) {
+  this->xAxis = axis;
+}
+
+void Position::setYAxis(glm::vec3 axis) {
+  this->yAxis = axis;
+}
+
+void Position::setZAxis(glm::vec3 axis) {
+  this->zAxis = axis;
+}
+
+glm::vec3 Position::getXAxis() {
+  return this->xAxis;
+}
+
+glm::vec3 Position::getYAxis() {
+  return this->yAxis;
+}
+
+glm::vec3 Position::getZAxis() {
+  return this->zAxis;
+}

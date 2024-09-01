@@ -4,20 +4,15 @@ Cube::Cube(Shader* shader) : Model(shader) {
   this->generateFaces();
 }
 
-// void Cube::draw() {
-//   std::vector<glm::mat4> models;
-//   models.push_back(this->position->getModel());
+// TODO: create builder to manage the position type
+void Cube::setPivot(float x, float y, float z) {
+  FixedPosition* newPosix = new FixedPosition(*this->position, glm::vec3(x, y, z));
 
-//   this->frontFace->draw(models);
-//   this->backFace->draw(models);
-//   this->leftFace->draw(models);
-//   this->rightFace->draw(models);
-//   this->topFace->draw(models);
-//   this->bottomFace->draw(models);
-// }
+  delete this->position;
+  this->position = newPosix;
+}
 
 void Cube::draw(glm::mat4 model) {
-  // models.push_back(this->position->getModel());
   glm::mat4 _model = model * this->position->getModel();
 
   this->frontFace->draw(_model);
@@ -76,7 +71,6 @@ void Cube::rotateY(float angle, float force) {
 
 void Cube::rotateZ(float angle, float force) {
   this->position->rotateZ(angle, force);
-
 }
 
 void Cube::scale(float scaling) {

@@ -47,8 +47,10 @@ add_executable(RubikCube
   src/Camera.cpp
   src/Mesh.cpp
   src/Model.cpp
+  src/AnimatedModel.cpp
   src/Position.cpp
   src/RelativePosition.cpp
+  src/FixedPosition.cpp
   src/Square.cpp
   src/Cube.cpp
   src/RubikCube.cpp

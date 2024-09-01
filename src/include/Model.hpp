@@ -9,6 +9,7 @@
 #include "Mesh.hpp"
 #include "Position.hpp"
 #include "RelativePosition.hpp"
+#include "FixedPosition.hpp"
 
 #include <vector>
 
@@ -24,8 +25,6 @@ protected:
 
 public:
   Model(Shader* shader);
-  ~Model();
-
 
   virtual void draw(glm::mat4 model = glm::mat4(1.0f)) = 0;
   void setPivot(float x, float y, float z);
@@ -36,6 +35,10 @@ public:
   virtual void rotateY(float angle, float force = 1.0f);
   virtual void rotateZ(float angle, float force = 1.0f);
   virtual void scale(float scaling);
+
+  virtual void setXAxis(glm::vec3 axis);
+  virtual void setYAxis(glm::vec3 axis);
+  virtual void setZAxis(glm::vec3 axis);
 };
 
 #endif

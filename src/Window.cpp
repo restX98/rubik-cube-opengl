@@ -76,6 +76,11 @@ void Window::setCamera(Camera* camera) {
   glfwSetCursorPosCallback(window, Window::cursorPositionCallback);
 }
 
+void Window::setRubikCube(RubikCube* rubikCube) {
+  this->rubikCube = rubikCube;
+}
+
+
 void Window::processInput() {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
     glfwSetWindowShouldClose(window, true);
@@ -93,6 +98,20 @@ void Window::processInput() {
   if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
     this->camera->moveRight(this->deltaTime);
   }
+
+  if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+    this->rubikCube->rotateL();
+  }
+  if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
+    this->rubikCube->rotateR();
+  }
+  if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+    this->rubikCube->rotateF();
+  }
+  if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+    this->rubikCube->rotateU();
+  }
+
 }
 
 void Window::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {

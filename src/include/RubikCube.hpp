@@ -1,7 +1,7 @@
 #ifndef RUBIK_CUBE_H
 #define RUBIK_CUBE_H
 
-#include <Model.hpp>
+#include <AnimatedModel.hpp>
 #include <Shader.hpp>
 #include <Cube.hpp>
 
@@ -23,7 +23,7 @@ struct CubePosition {
   int z;
 };
 
-class RubikCube : public Model {
+class RubikCube : public AnimatedModel {
 private:
   float speed = 2.5f;
 
@@ -31,16 +31,30 @@ private:
   void generate(Shader* shader);
   void align();
 
+  bool isTransitionL = false;
+  bool isTransitionR = false;
+  bool isTransitionF = false;
+  bool isTransitionU = false;
+  float rotationAngle;
+  float rotationSpeed = 50.0f;
+
+  void draw(glm::mat4 model) override;
+  void updateAxis(CubePosition* c);
+
 public:
   RubikCube(Shader* shader);
 
-  void draw(glm::mat4 model = glm::mat4(1.0f)) override;
-
+  void draw(float deltaTime, glm::mat4 model = glm::mat4(1.0f));
   void translate(float x, float y, float z) override;
   void rotateX(float angle, float force = 1.0f) override;
   void rotateY(float angle, float force = 1.0f) override;
   void rotateZ(float angle, float force = 1.0f) override;
   void scale(float scaling) override;
+
+  void rotateL();
+  void rotateR();
+  void rotateF();
+  void rotateU();
 };
 
 #endif
