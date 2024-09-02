@@ -68,163 +68,9 @@ void RubikCube::draw(glm::mat4 model) {
 }
 
 void RubikCube::draw(float deltaTime, glm::mat4 model) {
-  if (this->isTransitionR) {
-    float deltaAngle = deltaTime * this->rotationSpeed;
-    this->rotationAngle += deltaAngle;
-    if (this->rotationAngle >= 90.0f) {
-      deltaAngle -= this->rotationAngle - 90.0f;
-      this->rotationAngle = 90.0f;
-      this->isTransitionR = false;
-    }
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        for (int k = 0; k < 3; k++) {
-          CubePosition* c = this->cubes[i][j][k];
-          if (c->x == 1) {
-            c->cube->rotateX(deltaAngle);
-          }
-        }
-      }
-    }
-
-    if (!this->isTransitionR) {
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          for (int k = 0; k < 3; k++) {
-            CubePosition* c = this->cubes[i][j][k];
-            if (c->x == 1) {
-              glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-              newPosition = glm::round(newPosition);
-              c->x = newPosition.x;
-              c->y = newPosition.y;
-              c->z = newPosition.z;
-              this->updateAxis(c);
-            }
-          }
-        }
-      }
-    }
+  if (this->transition) {
+    this->transition->update(deltaTime);
   }
-
-  if (this->isTransitionL) {
-    float deltaAngle = deltaTime * this->rotationSpeed;
-    this->rotationAngle -= deltaAngle;
-    if (this->rotationAngle <= -90.0f) {
-      deltaAngle += this->rotationAngle + 90.0f;
-      this->rotationAngle = 90.0f;
-      this->isTransitionL = false;
-    }
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        for (int k = 0; k < 3; k++) {
-          CubePosition* c = this->cubes[i][j][k];
-          if (c->x == -1) {
-            c->cube->rotateX(deltaAngle);
-          }
-        }
-      }
-    }
-
-    if (!this->isTransitionL) {
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          for (int k = 0; k < 3; k++) {
-            CubePosition* c = this->cubes[i][j][k];
-            if (c->x == -1) {
-              glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-              newPosition = glm::round(newPosition);
-              c->x = newPosition.x;
-              c->y = newPosition.y;
-              c->z = newPosition.z;
-              this->updateAxis(c);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  if (this->isTransitionF) {
-    float deltaAngle = deltaTime * this->rotationSpeed;
-    this->rotationAngle += deltaAngle;
-    if (this->rotationAngle >= 90.0f) {
-      deltaAngle -= this->rotationAngle - 90.0f;
-      this->rotationAngle = 90.0f;
-      this->isTransitionF = false;
-    }
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        for (int k = 0; k < 3; k++) {
-          CubePosition* c = this->cubes[i][j][k];
-          if (c->z == -1) {
-            c->cube->rotateZ(deltaAngle);
-          }
-        }
-      }
-    }
-
-    if (!this->isTransitionF) {
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          for (int k = 0; k < 3; k++) {
-            CubePosition* c = this->cubes[i][j][k];
-            if (c->z == -1) {
-              glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-              newPosition = glm::round(newPosition);
-              c->x = newPosition.x;
-              c->y = newPosition.y;
-              c->z = newPosition.z;
-              this->updateAxis(c);
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  if (this->isTransitionU) {
-    float deltaAngle = deltaTime * this->rotationSpeed;
-    this->rotationAngle += deltaAngle;
-    if (this->rotationAngle >= 90.0f) {
-      deltaAngle -= this->rotationAngle - 90.0f;
-      this->rotationAngle = 90.0f;
-      this->isTransitionU = false;
-    }
-
-    for (int i = 0; i < 3; i++) {
-      for (int j = 0; j < 3; j++) {
-        for (int k = 0; k < 3; k++) {
-          CubePosition* c = this->cubes[i][j][k];
-          if (c->y == -1) {
-            c->cube->rotateY(deltaAngle);
-          }
-        }
-      }
-    }
-
-    if (!this->isTransitionU) {
-      for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < 3; j++) {
-          for (int k = 0; k < 3; k++) {
-            CubePosition* c = this->cubes[i][j][k];
-            if (c->y == -1) {
-              glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-              newPosition = glm::round(newPosition);
-              c->x = newPosition.x;
-              c->y = newPosition.y;
-              c->z = newPosition.z;
-              this->updateAxis(c);
-            }
-          }
-        }
-      }
-    }
-  }
-
   this->draw(model);
 }
 
@@ -256,37 +102,39 @@ void RubikCube::scale(float scaling) {
   this->position->scale(scaling);
 }
 
-void RubikCube::rotateL() {
-  if (!this->isTransitionL) {
-    std::cout << "L pressed" << std::endl;
-    this->isTransitionL = true;
-    this->rotationAngle = 0;
+void RubikCube::rotateL(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::LEFT_FACE, clockwise));
+}
+
+void RubikCube::rotateR(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::RIGHT_FACE, clockwise));
+}
+
+void RubikCube::rotateF(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::FRONT_FACE, clockwise));
+}
+
+void RubikCube::rotateB(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::BACK_FACE, clockwise));
+}
+
+void RubikCube::rotateU(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::TOP_FACE, clockwise));
+}
+
+void RubikCube::rotateD(bool clockwise) {
+  this->setTransition(new RubikCube::FaceTransition(this, Face::BOTTOM_FACE, clockwise));
+}
+
+void RubikCube::setTransition(Transition* transition) {
+  if (!this->transition) {
+    this->transition = transition;
+  } else if (this->transition->isEnded()) {
+    delete this->transition;
+    this->transition = transition;
   }
 }
 
-void RubikCube::rotateR() {
-  if (!this->isTransitionR) {
-    std::cout << "R pressed" << std::endl;
-    this->isTransitionR = true;
-    this->rotationAngle = 0;
-  }
-}
-
-void RubikCube::rotateF() {
-  if (!this->isTransitionF) {
-    std::cout << "F pressed" << std::endl;
-    this->isTransitionF = true;
-    this->rotationAngle = 0;
-  }
-}
-
-void RubikCube::rotateU() {
-  if (!this->isTransitionU) {
-    std::cout << "U pressed" << std::endl;
-    this->isTransitionU = true;
-    this->rotationAngle = 0;
-  }
-}
 void RubikCube::updateAxis(CubePosition* c) {
   if (c->z == -1) {
     c->cube->setZAxis(glm::vec3(0.0f, 0.0f, -1.0f));
@@ -307,14 +155,88 @@ void RubikCube::updateAxis(CubePosition* c) {
   }
 }
 
+RubikCube::FaceTransition::FaceTransition(RubikCube* rc, Face face, bool clockwise)
+  : rubikCube(rc), clockwise(clockwise), angle(0.0f) {
 
-void RubikCube::draw(float deltaTime) {
-  this->transform();
+  switch (face) {
+  case Face::FRONT_FACE:
+    this->axis = &CubePosition::z;
+    this->axisPos = -1;
+    this->rotate = &Cube::rotateZ;
+    this->faceNormal = glm::vec3(0.0f, 0.0f, -1.0f);
+    break;
+  case Face::BACK_FACE:
+    this->axis = &CubePosition::z;
+    this->axisPos = 1;
+    this->rotate = &Cube::rotateZ;
+    this->faceNormal = glm::vec3(0.0f, 0.0f, 1.0f);
+    break;
+  case Face::LEFT_FACE:
+    this->axis = &CubePosition::x;
+    this->axisPos = -1;
+    this->rotate = &Cube::rotateX;
+    this->faceNormal = glm::vec3(-1.0f, 0.0f, 0.0f);
+    break;
+  case Face::RIGHT_FACE:
+    this->axis = &CubePosition::x;
+    this->axisPos = 1;
+    this->rotate = &Cube::rotateX;
+    this->faceNormal = glm::vec3(1.0f, 0.0f, 0.0f);
+    break;
+  case Face::TOP_FACE:
+    this->axis = &CubePosition::y;
+    this->axisPos = -1;
+    this->rotate = &Cube::rotateY;
+    this->faceNormal = glm::vec3(0.0f, -1.0f, 0.0f);
+    break;
+  case Face::BOTTOM_FACE:
+    this->axis = &CubePosition::y;
+    this->axisPos = 1;
+    this->rotate = &Cube::rotateY;
+    this->faceNormal = glm::vec3(0.0f, 1.0f, 0.0f);
+    break;
+  }
+}
 
-  for (int i = 0; i < 3; ++i) {
-    for (int j = 0; j < 3; ++j) {
+void RubikCube::FaceTransition::update(float deltaTime) {
+  if (this->isEnded()) {
+    return;
+  }
+
+  int sign = this->clockwise ? 1 : -1;
+
+  float deltaAngle = deltaTime * this->speed;
+  this->angle += deltaAngle;
+  if (this->angle >= 90.0f) {
+    deltaAngle -= this->angle - 90.0f;
+    this->end();
+  }
+
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
       for (int k = 0; k < 3; k++) {
-        cubes[i][j][k].draw();
+        CubePosition* c = this->rubikCube->cubes[i][j][k];
+        if (c->*axis == axisPos) {
+          (c->cube->*rotate)(deltaAngle * sign, 1.0f);
+        }
+      }
+    }
+  }
+
+  if (this->isEnded()) {
+    for (int i = 0; i < 3; i++) {
+      for (int j = 0; j < 3; j++) {
+        for (int k = 0; k < 3; k++) {
+          CubePosition* c = this->rubikCube->cubes[i][j][k];
+          if (c->*axis == axisPos) {
+            glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(90.0f * sign), this->faceNormal);
+            newPosition = glm::round(newPosition);
+            c->x = newPosition.x;
+            c->y = newPosition.y;
+            c->z = newPosition.z;
+            this->rubikCube->updateAxis(c);
+          }
+        }
       }
     }
   }

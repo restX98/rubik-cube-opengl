@@ -86,30 +86,40 @@ void Window::processInput() {
     glfwSetWindowShouldClose(window, true);
   }
 
-  if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
     this->camera->moveForward(this->deltaTime);
   }
-  if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
     this->camera->moveBackward(this->deltaTime);
   }
-  if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
     this->camera->moveLeft(this->deltaTime);
   }
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
     this->camera->moveRight(this->deltaTime);
   }
+  if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+    // Invert camera view
+  }
 
+  bool clockwise = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS && glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) != GLFW_PRESS;
   if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-    this->rubikCube->rotateL();
+    this->rubikCube->rotateL(clockwise);
   }
   if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-    this->rubikCube->rotateR();
+    this->rubikCube->rotateR(clockwise);
   }
   if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-    this->rubikCube->rotateF();
+    this->rubikCube->rotateF(clockwise);
+  }
+  if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
+    this->rubikCube->rotateB(clockwise);
   }
   if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
-    this->rubikCube->rotateU();
+    this->rubikCube->rotateU(clockwise);
+  }
+  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+    this->rubikCube->rotateD(clockwise);
   }
 
 }

@@ -40,6 +40,7 @@ private:
 
   void draw(glm::mat4 model) override;
   void updateAxis(CubePosition* c);
+  void setTransition(Transition* transition);
 
 public:
   RubikCube(Shader* shader);
@@ -51,10 +52,30 @@ public:
   void rotateZ(float angle, float force = 1.0f) override;
   void scale(float scaling) override;
 
-  void rotateL();
-  void rotateR();
-  void rotateF();
-  void rotateU();
+  void rotateL(bool clockwise = true);
+  void rotateR(bool clockwise = true);
+  void rotateF(bool clockwise = true);
+  void rotateB(bool clockwise = true);
+  void rotateU(bool clockwise = true);
+  void rotateD(bool clockwise = true);
+
+protected:
+  class FaceTransition : public Transition {
+  private:
+    RubikCube* rubikCube;
+    float speed = 50.0f;
+    bool clockwise;
+    float angle;
+    int CubePosition::* axis;
+    int axisPos;
+    void (Cube::* rotate)(float, float);
+    glm::vec3 faceNormal;
+
+  public:
+    FaceTransition(RubikCube* rc, Face face, bool clockwise = true);
+
+    void update(float deltaTime) override;
+  };
 };
 
 #endif

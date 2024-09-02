@@ -50,7 +50,3 @@ void Model::setYAxis(glm::vec3 axis) {
 void Model::setZAxis(glm::vec3 axis) {
   this->position->setZAxis(axis);
 }
-
-Position* Model::getPosition() {
-  return this->position;
-}
