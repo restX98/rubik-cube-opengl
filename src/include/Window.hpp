@@ -1,9 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <functional>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <iostream>
+#include <functional>
 
 #include "Event.hpp"
 #include "Camera.hpp"

@@ -1,7 +1,5 @@
 #include "Window.hpp"
 
-#include <iostream>
-
 Window::Window(int width, int height, const char* title) : window(nullptr) {
   if (!glfwInit()) {
     std::cerr << "Failed to initialize GLFW" << std::endl;

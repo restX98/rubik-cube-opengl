@@ -1,7 +1,5 @@
 #include "RubikCube.hpp"
 
-#include <iostream>
-
 RubikCube::RubikCube(Shader* shader) : AnimatedModel(shader) {
   generate(shader);
 }
