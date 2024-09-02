@@ -35,6 +35,7 @@ void Mesh::setup() {
 }
 
 void Mesh::draw(glm::mat4 model) {
+  this->shader.use();
   this->shader.setMat4("model", model);
 
   glBindVertexArray(VAO);

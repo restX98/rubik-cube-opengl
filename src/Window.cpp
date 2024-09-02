@@ -57,8 +57,6 @@ void Window::run(std::function<void(float)> renderFunction) {
   glEnable(GL_DEPTH_TEST);
 
   while (!shouldClose()) {
-    this->processInput();
-
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -76,52 +74,16 @@ void Window::setCamera(Camera* camera) {
   glfwSetCursorPosCallback(window, Window::cursorPositionCallback);
 }
 
-void Window::setRubikCube(RubikCube* rubikCube) {
-  this->rubikCube = rubikCube;
+void Window::setKeyCallback(std::function<void(GLFWwindow* window, int key, int scancode, int action, int mods)> callback) {
+  this->keyEvent.setCallback(callback);
+  glfwSetKeyCallback(this->window, this->keyCallback);
 }
 
-
-void Window::processInput() {
-  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-    glfwSetWindowShouldClose(window, true);
+void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+  Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
+  if (instance) {
+    instance->keyEvent(window, key, scancode, action, mods);
   }
-
-  if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-    this->camera->moveForward(this->deltaTime);
-  }
-  if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-    this->camera->moveBackward(this->deltaTime);
-  }
-  if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-    this->camera->moveLeft(this->deltaTime);
-  }
-  if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-    this->camera->moveRight(this->deltaTime);
-  }
-  if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-    // Invert camera view
-  }
-
-  bool clockwise = glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) != GLFW_PRESS && glfwGetKey(window, GLFW_KEY_RIGHT_SHIFT) != GLFW_PRESS;
-  if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
-    this->rubikCube->rotateL(clockwise);
-  }
-  if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS) {
-    this->rubikCube->rotateR(clockwise);
-  }
-  if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
-    this->rubikCube->rotateF(clockwise);
-  }
-  if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS) {
-    this->rubikCube->rotateB(clockwise);
-  }
-  if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
-    this->rubikCube->rotateU(clockwise);
-  }
-  if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-    this->rubikCube->rotateD(clockwise);
-  }
-
 }
 
 void Window::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
