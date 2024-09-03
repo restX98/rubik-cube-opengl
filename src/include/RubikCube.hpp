@@ -25,18 +25,8 @@ struct CubePosition {
 
 class RubikCube : public AnimatedModel {
 private:
-  float speed = 2.5f;
-
   std::vector<std::vector<std::vector<CubePosition*>>> cubes;
   void generate(Shader* shader);
-  void align();
-
-  bool isTransitionL = false;
-  bool isTransitionR = false;
-  bool isTransitionF = false;
-  bool isTransitionU = false;
-  float rotationAngle;
-  float rotationSpeed = 50.0f;
 
   void draw(glm::mat4 model) override;
   void updateAxis(CubePosition* c);
