@@ -26,9 +26,9 @@ struct CubePosition { // TODO: Make it as subclass
 class RubikCube : public AnimatedModel {
 private:
   std::vector<std::vector<std::vector<CubePosition*>>> cubes;
-  void generate(Shader* shader);
 
   void draw(glm::mat4 model = glm::mat4(1.0f)) override;
+  void generate(Shader* shader);
   void updateAxis(CubePosition* c);
 
 public:
@@ -48,12 +48,14 @@ public:
   void rotateU(bool clockwise = true);
   void rotateD(bool clockwise = true);
 
+  void switchPOV(bool reverse);
+
 protected:
   class FaceTransition : public Transition {
   private:
     RubikCube* rubikCube;
-    float speed = 50.0f;
-    bool clockwise;
+    float speed = 150.0f;
+    int sign;
     float angle;
     int CubePosition::* axis;
     int axisPos;
@@ -62,6 +64,21 @@ protected:
 
   public:
     FaceTransition(RubikCube* rc, Face face, bool clockwise = true);
+
+    void update(float deltaTime) override;
+  };
+
+  class POVTransition : public Transition {
+  private:
+    RubikCube* rubikCube;
+    float speed = 250.0f;
+
+    float angle;
+    float endingAngle;
+    int sign;
+
+  public:
+    POVTransition(RubikCube* rc, float startingAngle, float endingAngle);
 
     void update(float deltaTime) override;
   };

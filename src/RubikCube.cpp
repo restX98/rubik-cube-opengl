@@ -124,6 +124,14 @@ void RubikCube::rotateD(bool clockwise) {
   this->setTransition(new RubikCube::FaceTransition(this, Face::BOTTOM_FACE, clockwise));
 }
 
+void RubikCube::switchPOV(bool reverse) {
+  delete this->transition;
+  this->transition = nullptr;
+  float angle = reverse ? 155.0f : 0.0f;
+  this->setTransition(new RubikCube::POVTransition(this, this->position->getRotationAngleX(), angle));
+}
+
+
 void RubikCube::updateAxis(CubePosition* c) {
   if (c->z == -1) {
     c->cube->setZAxis(glm::vec3(0.0f, 0.0f, -1.0f));
@@ -145,7 +153,7 @@ void RubikCube::updateAxis(CubePosition* c) {
 }
 
 RubikCube::FaceTransition::FaceTransition(RubikCube* rc, Face face, bool clockwise)
-  : rubikCube(rc), clockwise(clockwise), angle(0.0f) {
+  : rubikCube(rc), sign(clockwise ? 1 : -1), angle(0.0f) {
 
   switch (face) {
   case Face::FRONT_FACE:
@@ -192,8 +200,6 @@ void RubikCube::FaceTransition::update(float deltaTime) {
     return;
   }
 
-  int sign = this->clockwise ? 1 : -1;
-
   float deltaAngle = deltaTime * this->speed;
   this->angle += deltaAngle;
   if (this->angle >= 90.0f) {
@@ -206,7 +212,7 @@ void RubikCube::FaceTransition::update(float deltaTime) {
       for (int k = 0; k < 3; k++) {
         CubePosition* c = this->rubikCube->cubes[i][j][k];
         if (c->*axis == axisPos) {
-          (c->cube->*rotate)(deltaAngle * sign, 1.0f);
+          (c->cube->*rotate)(deltaAngle * this->sign, 1.0f);
         }
       }
     }
@@ -218,7 +224,7 @@ void RubikCube::FaceTransition::update(float deltaTime) {
         for (int k = 0; k < 3; k++) {
           CubePosition* c = this->rubikCube->cubes[i][j][k];
           if (c->*axis == axisPos) {
-            glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(90.0f * sign), this->faceNormal);
+            glm::vec4 newPosition = glm::vec4(c->x, c->y, c->z, 1.0f) * glm::rotate(glm::mat4(1.0f), glm::radians(90.0f * this->sign), this->faceNormal);
             newPosition = glm::round(newPosition);
             c->x = newPosition.x;
             c->y = newPosition.y;
@@ -229,4 +235,31 @@ void RubikCube::FaceTransition::update(float deltaTime) {
       }
     }
   }
+}
+
+RubikCube::POVTransition::POVTransition(RubikCube* rc, float startingAngle, float endingAngle)
+  : rubikCube(rc), angle(startingAngle), endingAngle(endingAngle), sign(startingAngle > endingAngle ? -1 : 1) {
+}
+
+void RubikCube::POVTransition::update(float deltaTime) {
+  if (this->isEnded()) {
+    return;
+  }
+
+  float deltaAngle = deltaTime * this->speed * this->sign;
+  this->angle += deltaAngle;
+
+  if (this->sign == -1) {
+    if (this->angle <= this->endingAngle) {
+      this->angle = this->endingAngle;
+      this->end();
+    }
+  } else {
+    if (this->angle >= this->endingAngle) {
+      this->angle = this->endingAngle;
+      this->end();
+    }
+  }
+
+  this->rubikCube->rotateX(this->angle);
 }

@@ -99,3 +99,23 @@ glm::vec3 Position::getYAxis() {
 glm::vec3 Position::getZAxis() {
   return this->zAxis;
 }
+
+glm::vec3 Position::getTranslation() {
+  return this->translation;
+}
+
+float Position::getRotationAngleX() {
+  return this->rotationAngleX;
+}
+
+float Position::getRotationAngleY() {
+  return this->rotationAngleY;
+}
+
+float Position::getRotationAngleZ() {
+  return this->rotationAngleZ;
+}
+
+float Position::getScaling() {
+  return this->scaling;
+}

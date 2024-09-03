@@ -48,6 +48,12 @@ public:
   virtual glm::vec3 getXAxis();
   virtual glm::vec3 getYAxis();
   virtual glm::vec3 getZAxis();
+
+  glm::vec3 getTranslation();
+  float getRotationAngleX();
+  float getRotationAngleY();
+  float getRotationAngleZ();
+  float getScaling();
 };
 
 #endif
