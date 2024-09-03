@@ -36,10 +36,6 @@ public:
 
   void draw(float deltaTime, glm::mat4 model = glm::mat4(1.0f));
   void translate(float x, float y, float z) override;
-  void rotateX(float angle, float force = 1.0f) override;
-  void rotateY(float angle, float force = 1.0f) override;
-  void rotateZ(float angle, float force = 1.0f) override;
-  void scale(float scaling) override;
 
   void rotateL(bool clockwise = true);
   void rotateR(bool clockwise = true);

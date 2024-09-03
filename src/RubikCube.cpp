@@ -84,22 +84,6 @@ void RubikCube::translate(float x, float y, float z) {
   this->position->translate(x, y, z);
 }
 
-void RubikCube::rotateX(float angle, float force) {
-  this->position->rotateX(angle, force);
-}
-
-void RubikCube::rotateY(float angle, float force) {
-  this->position->rotateY(angle, force);
-}
-
-void RubikCube::rotateZ(float angle, float force) {
-  this->position->rotateZ(angle, force);
-}
-
-void RubikCube::scale(float scaling) {
-  this->position->scale(scaling);
-}
-
 void RubikCube::rotateL(bool clockwise) {
   this->setTransition(new RubikCube::FaceTransition(this, Face::LEFT_FACE, clockwise));
 }
