@@ -6,12 +6,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <vector>
+
 #include "Mesh.hpp"
 #include "Position.hpp"
 #include "RelativePosition.hpp"
 #include "FixedPosition.hpp"
-
-#include <vector>
 
 class Model {
 private:

@@ -7,7 +7,6 @@
 #include <functional>
 
 #include "Event.hpp"
-#include "Camera.hpp"
 
 class Window {
 protected:

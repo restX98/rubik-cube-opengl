@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "AnimatedModel.hpp"
-#include "Shader.hpp"
 #include "Cube.hpp"
 
 #define GAP 2.05f

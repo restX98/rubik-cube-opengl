@@ -1,9 +1,9 @@
 #ifndef ANIMATED_MODEL_H
 #define ANIMATED_MODEL_H
 
-#include "Model.hpp"
-
 #include <vector>
+
+#include "Model.hpp"
 
 class AnimatedModel : public Model {
 public:

@@ -2,18 +2,19 @@
 
 #include <iostream>
 #include <vector>
+
 #include "Window.hpp"
 #include "Shader.hpp"
 #include "RubikCube.hpp"
-#include "Cube.hpp"
 #include "Camera.hpp"
+
 #include "constants.hpp"
 
 int main() {
 
   Window window(
-    Constants::Graphics::WINDOW_WIDTH,
-    Constants::Graphics::WINDOW_HEIGHT,
+    Constants::WINDOW_WIDTH,
+    Constants::WINDOW_HEIGHT,
     Constants::APP_NAME
   );
   if (window.getWindow() == nullptr) {
@@ -28,7 +29,7 @@ int main() {
 
   Shader shader(SHADERS_PATH "shader.vert", SHADERS_PATH "shader.frag");
 
-  Camera camera(shader, Constants::Graphics::WINDOW_WIDTH, Constants::Graphics::WINDOW_HEIGHT);
+  Camera camera(shader, Constants::WINDOW_WIDTH, Constants::WINDOW_HEIGHT);
 
   RubikCube rubikCube(&shader);
 

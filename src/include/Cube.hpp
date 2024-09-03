@@ -5,9 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Model.hpp>
-#include <Shader.hpp>
-#include <Square.hpp>
+#include "Square.hpp"
 
 enum class Face {
   FRONT_FACE,

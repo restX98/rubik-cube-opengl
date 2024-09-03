@@ -5,10 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <Mesh.hpp>
-#include <Model.hpp>
-#include <Position.hpp>
-#include <Shader.hpp>
+#include "Model.hpp"
 
 enum class Plane {
   XY,
