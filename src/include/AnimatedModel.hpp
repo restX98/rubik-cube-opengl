@@ -27,6 +27,8 @@ protected:
   };
 
   Transition* transition;
+
+  void setTransition(Transition* transition);
 };
 
 #endif

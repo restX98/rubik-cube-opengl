@@ -31,11 +31,12 @@ public:
   void setKeyCallback(std::function<void(GLFWwindow* window, int key, int scancode, int action, int mods)> callback);
   void setCursorPosCallback(std::function<void(GLFWwindow* window_, double xPos_, double yPos_)> callback);
   void setFramebufferSizeCallback(std::function<void(GLFWwindow* window_, int width, int height)> callback);
+  void setMouseButtonCallback(std::function<void(GLFWwindow* window, int button, int state, int mods)> callback);
 
 private:
   Event<GLFWwindow*, int, int, int, int> keyEvent;
   Event<GLFWwindow*, double, double> cursorPosEvent;
-  // Event<Window&, MouseButton, MouseButtonState, ModifierKeyBit> mouseButtonEvent;
+  Event<GLFWwindow*, int, int, int> mouseButtonEvent;
   Event<GLFWwindow*, int, int> framebufferSizeEvent;
 
   bool shouldClose();
@@ -44,6 +45,7 @@ private:
   static void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
   static void cursorPosCallback(GLFWwindow* window, double xPos, double yPos);
   static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+  static void mouseButtonCallback(GLFWwindow* window, int button, int state, int mods);
 };
 
 #endif

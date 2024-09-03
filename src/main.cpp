@@ -34,15 +34,20 @@ int main() {
 
   window.setFramebufferSizeCallback(
     [&camera](GLFWwindow* window, int width, int height) {
-      std::cout << "W: " << width << " H: " << height << std::endl;
-      camera.setWidth(width);
-      camera.setHeight(height);
+      camera.setWindowSize(width, height);
     }
   );
 
   window.setCursorPosCallback(
     [&camera](GLFWwindow* window, double xPos, double yPos) {
-      camera.lookAround(xPos, yPos);
+      camera.setMouseCoords(xPos, yPos);
+    }
+  );
+  window.setMouseButtonCallback(
+    [&camera](GLFWwindow* window, int button, int state, int mods) {
+      if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+        camera.setView(state == GLFW_PRESS ? Camera::State::REVERSE : Camera::State::NORMAL);
+      }
     }
   );
 
@@ -76,7 +81,7 @@ int main() {
 
   window.run(
     [&rubikCube, &camera](float deltaTime) {
-      camera.update();
+      camera.draw(deltaTime);
       rubikCube.draw(deltaTime);
     }
   );

@@ -16,7 +16,7 @@
 #define BLUE glm::vec3(0.0f, 0.2745f, 0.6784f)
 #define ORANGE glm::vec3(1.0f, 0.3451f, 0.0f)
 
-struct CubePosition {
+struct CubePosition { // TODO: Make it as subclass
   Cube* cube;
   int x;
   int y;
@@ -28,9 +28,8 @@ private:
   std::vector<std::vector<std::vector<CubePosition*>>> cubes;
   void generate(Shader* shader);
 
-  void draw(glm::mat4 model) override;
+  void draw(glm::mat4 model = glm::mat4(1.0f)) override;
   void updateAxis(CubePosition* c);
-  void setTransition(Transition* transition);
 
 public:
   RubikCube(Shader* shader);

@@ -15,3 +15,12 @@ bool AnimatedModel::Transition::isEnded() {
 void AnimatedModel::Transition::end() {
   this->ended = true;
 }
+
+void AnimatedModel::setTransition(Transition* transition) {
+  if (!this->transition) {
+    this->transition = transition;
+  } else if (this->transition->isEnded()) {
+    delete this->transition;
+    this->transition = transition;
+  }
+}

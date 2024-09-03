@@ -124,15 +124,6 @@ void RubikCube::rotateD(bool clockwise) {
   this->setTransition(new RubikCube::FaceTransition(this, Face::BOTTOM_FACE, clockwise));
 }
 
-void RubikCube::setTransition(Transition* transition) {
-  if (!this->transition) {
-    this->transition = transition;
-  } else if (this->transition->isEnded()) {
-    delete this->transition;
-    this->transition = transition;
-  }
-}
-
 void RubikCube::updateAxis(CubePosition* c) {
   if (c->z == -1) {
     c->cube->setZAxis(glm::vec3(0.0f, 0.0f, -1.0f));

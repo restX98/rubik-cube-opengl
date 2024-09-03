@@ -84,6 +84,11 @@ void Window::setFramebufferSizeCallback(std::function<void(GLFWwindow* window, i
   glfwSetFramebufferSizeCallback(this->window, this->framebufferSizeCallback);
 }
 
+void Window::setMouseButtonCallback(std::function<void(GLFWwindow* window, int button, int state, int mods)> callback) {
+  this->mouseButtonEvent.setCallback(callback);
+  glfwSetMouseButtonCallback(this->window, this->mouseButtonCallback);
+}
+
 void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
   Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
   if (instance) {
@@ -102,5 +107,12 @@ void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) 
   Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
   if (instance) {
     instance->framebufferSizeEvent(window, width, height);
+  }
+}
+
+void Window::mouseButtonCallback(GLFWwindow* window, int button, int state, int mods) {
+  Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
+  if (instance) {
+    instance->mouseButtonEvent(window, button, state, mods);
   }
 }
