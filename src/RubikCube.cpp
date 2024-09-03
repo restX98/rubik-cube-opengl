@@ -113,6 +113,9 @@ void RubikCube::turnUpsideDown() {
   Face tmp = this->faceMapping[Face::TOP_FACE];
   this->faceMapping[Face::TOP_FACE] = this->faceMapping[Face::BOTTOM_FACE];
   this->faceMapping[Face::BOTTOM_FACE] = tmp;
+  tmp = this->faceMapping[Face::RIGHT_FACE];
+  this->faceMapping[Face::RIGHT_FACE] = this->faceMapping[Face::LEFT_FACE];
+  this->faceMapping[Face::LEFT_FACE] = tmp;
 }
 
 void RubikCube::Cubby::setPivot(float x, float y, float z) {
