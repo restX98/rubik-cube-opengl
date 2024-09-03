@@ -85,27 +85,27 @@ void RubikCube::translate(float x, float y, float z) {
 }
 
 void RubikCube::rotateL(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::LEFT_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::LEFT_FACE], clockwise));
 }
 
 void RubikCube::rotateR(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::RIGHT_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::RIGHT_FACE], clockwise));
 }
 
 void RubikCube::rotateF(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::FRONT_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::FRONT_FACE], clockwise));
 }
 
 void RubikCube::rotateB(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::BACK_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::BACK_FACE], clockwise));
 }
 
 void RubikCube::rotateU(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::TOP_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::TOP_FACE], clockwise));
 }
 
 void RubikCube::rotateD(bool clockwise) {
-  this->setTransition(new RubikCube::FaceTransition(this, Face::BOTTOM_FACE, clockwise));
+  this->setTransition(new RubikCube::FaceTransition(this, this->faceMapping[Face::BOTTOM_FACE], clockwise));
 }
 
 void RubikCube::switchPOV(bool reverse) {
@@ -113,6 +113,43 @@ void RubikCube::switchPOV(bool reverse) {
   this->transition = nullptr;
   float angle = reverse ? 155.0f : 0.0f;
   this->setTransition(new RubikCube::POVTransition(this, this->position->getRotationAngleX(), angle));
+}
+
+void RubikCube::turnRight() {
+  float currentRotation = this->position->getRotationAngleY();
+  float angle = currentRotation - 90.0f;
+  this->setTransition(new RubikCube::POVTransition(this, currentRotation, angle, Axis::Y));
+
+  Face tmp = this->faceMapping[Face::FRONT_FACE];
+  this->faceMapping[Face::FRONT_FACE] = this->faceMapping[Face::RIGHT_FACE];
+  this->faceMapping[Face::RIGHT_FACE] = this->faceMapping[Face::BACK_FACE];
+  this->faceMapping[Face::BACK_FACE] = this->faceMapping[Face::LEFT_FACE];
+  this->faceMapping[Face::LEFT_FACE] = tmp;
+}
+
+void RubikCube::turnLeft() {
+  float currentRotation = this->position->getRotationAngleY();
+  float angle = currentRotation + 90.0f;
+  this->setTransition(new RubikCube::POVTransition(this, currentRotation, angle, Axis::Y));
+
+  Face tmp = this->faceMapping[Face::FRONT_FACE];
+  this->faceMapping[Face::FRONT_FACE] = this->faceMapping[Face::LEFT_FACE];
+  this->faceMapping[Face::LEFT_FACE] = this->faceMapping[Face::BACK_FACE];
+  this->faceMapping[Face::BACK_FACE] = this->faceMapping[Face::RIGHT_FACE];
+  this->faceMapping[Face::RIGHT_FACE] = tmp;
+}
+
+void RubikCube::turnUpsideDown() {
+  float currentRotation = this->position->getRotationAngleZ();
+  float angle = currentRotation + 180.0f;
+  if (currentRotation >= 360.0f) {
+    angle -= 360.0f;
+  }
+  this->setTransition(new RubikCube::POVTransition(this, currentRotation, angle, Axis::Z));
+
+  Face tmp = this->faceMapping[Face::TOP_FACE];
+  this->faceMapping[Face::TOP_FACE] = this->faceMapping[Face::BOTTOM_FACE];
+  this->faceMapping[Face::BOTTOM_FACE] = tmp;
 }
 
 
@@ -221,8 +258,19 @@ void RubikCube::FaceTransition::update(float deltaTime) {
   }
 }
 
-RubikCube::POVTransition::POVTransition(RubikCube* rc, float startingAngle, float endingAngle)
+RubikCube::POVTransition::POVTransition(RubikCube* rc, float startingAngle, float endingAngle, Axis axis)
   : rubikCube(rc), angle(startingAngle), endingAngle(endingAngle), sign(startingAngle > endingAngle ? -1 : 1) {
+  switch (axis) {
+  case Axis::X:
+    this->rotate = &RubikCube::rotateX;
+    break;
+  case Axis::Y:
+    this->rotate = &RubikCube::rotateY;
+    break;
+  case Axis::Z:
+    this->rotate = &RubikCube::rotateZ;
+    break;
+  }
 }
 
 void RubikCube::POVTransition::update(float deltaTime) {
@@ -245,5 +293,5 @@ void RubikCube::POVTransition::update(float deltaTime) {
     }
   }
 
-  this->rubikCube->rotateX(this->angle);
+  (this->rubikCube->*rotate)(this->angle, 1.0f);
 }

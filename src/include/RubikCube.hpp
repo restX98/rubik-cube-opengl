@@ -1,11 +1,12 @@
 #ifndef RUBIK_CUBE_H
 #define RUBIK_CUBE_H
 
-#include <AnimatedModel.hpp>
-#include <Shader.hpp>
-#include <Cube.hpp>
-
+#include <unordered_map>
 #include <vector>
+
+#include "AnimatedModel.hpp"
+#include "Shader.hpp"
+#include "Cube.hpp"
 
 #define GAP 2.05f
 
@@ -26,6 +27,14 @@ struct CubePosition { // TODO: Make it as subclass
 class RubikCube : public AnimatedModel {
 private:
   std::vector<std::vector<std::vector<CubePosition*>>> cubes;
+  std::unordered_map<Face, Face> faceMapping = {
+    {Face::FRONT_FACE, Face::FRONT_FACE},
+    {Face::BACK_FACE, Face::BACK_FACE},
+    {Face::LEFT_FACE, Face::LEFT_FACE},
+    {Face::RIGHT_FACE, Face::RIGHT_FACE},
+    {Face::TOP_FACE, Face::TOP_FACE},
+    {Face::BOTTOM_FACE, Face::BOTTOM_FACE}
+  };
 
   void draw(glm::mat4 model = glm::mat4(1.0f)) override;
   void generate(Shader* shader);
@@ -37,6 +46,10 @@ public:
   void draw(float deltaTime, glm::mat4 model = glm::mat4(1.0f));
   void translate(float x, float y, float z) override;
 
+  void turnRight();
+  void turnLeft();
+  void turnUpsideDown();
+
   void rotateL(bool clockwise = true);
   void rotateR(bool clockwise = true);
   void rotateF(bool clockwise = true);
@@ -47,6 +60,12 @@ public:
   void switchPOV(bool reverse);
 
 protected:
+  enum class Axis {
+    X,
+    Y,
+    Z
+  };
+
   class FaceTransition : public Transition {
   private:
     RubikCube* rubikCube;
@@ -69,12 +88,13 @@ protected:
     RubikCube* rubikCube;
     float speed = 250.0f;
 
+    void (RubikCube::* rotate)(float, float);
     float angle;
     float endingAngle;
     int sign;
 
   public:
-    POVTransition(RubikCube* rc, float startingAngle, float endingAngle);
+    POVTransition(RubikCube* rc, float startingAngle, float endingAngle, Axis axis = Axis::X);
 
     void update(float deltaTime) override;
   };

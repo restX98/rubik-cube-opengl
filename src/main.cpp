@@ -58,23 +58,35 @@ int main() {
       }
 
       bool clockwise = !(mods & GLFW_MOD_SHIFT);
-      if (key == GLFW_KEY_L) {
-        rubikCube.rotateL(clockwise);
-      }
-      if (key == GLFW_KEY_R) {
-        rubikCube.rotateR(clockwise);
-      }
-      if (key == GLFW_KEY_F) {
-        rubikCube.rotateF(clockwise);
-      }
-      if (key == GLFW_KEY_B) {
-        rubikCube.rotateB(clockwise);
-      }
-      if (key == GLFW_KEY_U) {
-        rubikCube.rotateU(clockwise);
-      }
-      if (key == GLFW_KEY_D) {
-        rubikCube.rotateD(clockwise);
+      if (action == GLFW_RELEASE) {
+        if (key == GLFW_KEY_L) {
+          rubikCube.rotateL(clockwise);
+        }
+        if (key == GLFW_KEY_R) {
+          rubikCube.rotateR(clockwise);
+        }
+        if (key == GLFW_KEY_F) {
+          rubikCube.rotateF(clockwise);
+        }
+        if (key == GLFW_KEY_B) {
+          rubikCube.rotateB(clockwise);
+        }
+        if (key == GLFW_KEY_U) {
+          rubikCube.rotateU(clockwise);
+        }
+        if (key == GLFW_KEY_D) {
+          rubikCube.rotateD(clockwise);
+        }
+
+        if (key == GLFW_KEY_RIGHT) {
+          rubikCube.turnRight();
+        }
+        if (key == GLFW_KEY_LEFT) {
+          rubikCube.turnLeft();
+        }
+        if (key == GLFW_KEY_SPACE) {
+          rubikCube.turnUpsideDown();
+        }
       }
     }
   );

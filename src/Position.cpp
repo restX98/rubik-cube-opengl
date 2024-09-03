@@ -47,17 +47,17 @@ void Position::resetRotation() {
   this->isDirty = true;
 }
 void Position::rotateX(float angle, float force) {
-  this->rotationAngleX = angle;
+  this->rotationAngleX = fmod(angle, 360.0f);
   this->rotationForceX = force > 1.0f ? 1.0f : force;
   this->isDirty = true;
 }
 void Position::rotateY(float angle, float force) {
-  this->rotationAngleY = angle;
+  this->rotationAngleY = fmod(angle, 360.0f);
   this->rotationForceY = force > 1.0f ? 1.0f : force;
   this->isDirty = true;
 }
 void Position::rotateZ(float angle, float force) {
-  this->rotationAngleZ = angle;
+  this->rotationAngleZ = fmod(angle, 360.0f);
   this->rotationForceZ = force > 1.0f ? 1.0f : force;
   this->isDirty = true;
 }

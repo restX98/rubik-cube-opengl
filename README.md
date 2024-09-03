@@ -1,6 +1,6 @@
 # Rubik Cube
 
 ## TODOs:
-- [ ] Rotate cube
+- [x] Rotate cube
 - [ ] CubePosition as Subclass
 - [ ] Mesh material
