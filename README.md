@@ -2,5 +2,6 @@
 
 ## TODOs:
 - [x] Rotate cube
-- [ ] CubePosition as Subclass
+- [x] CubePosition as Subclass
 - [ ] Mesh material
+- [ ] Fix Bug: invert left and right faces on upside down

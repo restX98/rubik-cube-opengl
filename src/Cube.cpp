@@ -4,14 +4,6 @@ Cube::Cube(Shader* shader) : Model(shader) {
   this->generateFaces();
 }
 
-// TODO: create builder to manage the position type
-void Cube::setPivot(float x, float y, float z) {
-  FixedPosition* newPosix = new FixedPosition(*this->position, glm::vec3(x, y, z));
-
-  delete this->position;
-  this->position = newPosix;
-}
-
 void Cube::draw(glm::mat4 model) {
   glm::mat4 _model = model * this->position->getModel();
 
@@ -48,7 +40,6 @@ void Cube::generateFaces() {
   this->bottomFace->setPivot(0.0f, 0.0f, 0.0f);
   this->bottomFace->translate(0.0f, -distanceToOrigin, 0.0f);
 }
-
 
 void Cube::translate(float x, float y, float z) {
   this->frontFace->setPivot(x, y, z);

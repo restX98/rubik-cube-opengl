@@ -16,16 +16,25 @@
 #define BLUE glm::vec3(0.0f, 0.2745f, 0.6784f)
 #define ORANGE glm::vec3(1.0f, 0.3451f, 0.0f)
 
-struct CubePosition { // TODO: Make it as subclass
-  Cube* cube;
-  int x;
-  int y;
-  int z;
-};
-
 class RubikCube : public AnimatedModel {
+protected:
+  class Cubby : public Cube {
+  private:
+    friend class RubikCube;
+
+  protected:
+    Cubby(Shader* shader, int x, int y, int z);
+
+    int x;
+    int y;
+    int z;
+
+    void setPivot(float x, float y, float z);
+    void updateAxis();
+  };
+
 private:
-  std::vector<std::vector<std::vector<CubePosition*>>> cubes;
+  std::vector<std::vector<std::vector<RubikCube::Cubby*>>> cubes;
   std::unordered_map<Face, Face> faceMapping = {
     {Face::FRONT_FACE, Face::FRONT_FACE},
     {Face::BACK_FACE, Face::BACK_FACE},
@@ -37,7 +46,6 @@ private:
 
   void draw(glm::mat4 model = glm::mat4(1.0f)) override;
   void generate(Shader* shader);
-  void updateAxis(CubePosition* c);
 
 public:
   RubikCube(Shader* shader);
@@ -71,7 +79,7 @@ protected:
     float speed = 150.0f;
     int sign;
     float angle;
-    int CubePosition::* axis;
+    int RubikCube::Cubby::* axis;
     int axisPos;
     void (Cube::* rotate)(float, float);
     glm::vec3 faceNormal;

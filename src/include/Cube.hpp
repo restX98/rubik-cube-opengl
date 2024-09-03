@@ -41,8 +41,6 @@ public:
   void rotateY(float angle, float force = 1.0f) override;
   void rotateZ(float angle, float force = 1.0f) override;
   void scale(float scaling) override;
-
-  void setPivot(float x, float y, float z);
 };
 
 #endif
