@@ -12,24 +12,22 @@ protected:
   Shader& shader;
   glm::mat4 view;
   glm::mat4 projection;
+
+  glm::vec3 cameraInitialPos;
   glm::vec3 cameraPos;
   glm::vec3 cameraFront;
   glm::vec3 cameraUp;
-  float speed = 7.0f;
-  float pitch = 0.0f;
-  float yaw = -90.0f;
-  float moveSensitivity = 0.1f;
+
+  float width;
+  float height;
 
 public:
-  Camera(Shader& shader);
+  Camera(Shader& shader, float width, float height);
 
-  void moveForward(float delta = 1);
-  void moveBackward(float delta = 1);
-  void moveLeft(float delta = 1);
-  void moveRight(float delta = 1);
-
-  void lookAround(float xOffset, float yOffset);
-
+  void lookAround(float xPos, float yPos);
   void update();
+
+  void setHeight(int height);
+  void setWidth(int width);
 };
 #endif

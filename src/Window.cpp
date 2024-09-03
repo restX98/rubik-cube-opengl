@@ -58,23 +58,30 @@ void Window::run(std::function<void(float)> renderFunction) {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    this->camera->update();
-
     renderFunction(this->deltaTime);
 
     this->updateFrame();
   }
 }
 
-void Window::setCamera(Camera* camera) {
-  this->camera = camera;
-
-  glfwSetCursorPosCallback(window, Window::cursorPositionCallback);
-}
-
 void Window::setKeyCallback(std::function<void(GLFWwindow* window, int key, int scancode, int action, int mods)> callback) {
   this->keyEvent.setCallback(callback);
   glfwSetKeyCallback(this->window, this->keyCallback);
+}
+
+void Window::setCursorPosCallback(std::function<void(GLFWwindow* window, double xPos, double yPos)> callback) {
+  this->cursorPosEvent.setCallback(callback);
+  glfwSetCursorPosCallback(this->window, this->cursorPosCallback);
+}
+
+void Window::setFramebufferSizeCallback(std::function<void(GLFWwindow* window, int width, int height)> callback) {
+  this->framebufferSizeEvent.setCallback(
+    [callback](GLFWwindow* window, int width, int height) {
+      (callback)(window, width, height);
+      glViewport(0, 0, width, height);
+    }
+  );
+  glfwSetFramebufferSizeCallback(this->window, this->framebufferSizeCallback);
 }
 
 void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -84,24 +91,16 @@ void Window::keyCallback(GLFWwindow* window, int key, int scancode, int action, 
   }
 }
 
-void Window::cursorPositionCallback(GLFWwindow* window, double xpos, double ypos) {
+void Window::cursorPosCallback(GLFWwindow* window, double xPos, double yPos) {
   Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
   if (instance) {
-    instance->updateCursorPosition(xpos, ypos);
+    instance->cursorPosEvent(window, xPos, yPos);
   }
 }
 
-void Window::updateCursorPosition(double xpos, double ypos) {
-  if (this->firstMouseMove) {
-    this->lastX = xpos;
-    this->lastY = ypos;
-    this->firstMouseMove = false;
+void Window::framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+  Window* instance = static_cast<Window*>(glfwGetWindowUserPointer(window));
+  if (instance) {
+    instance->framebufferSizeEvent(window, width, height);
   }
-
-  float xOffset = xpos - this->lastX;
-  float yOffset = this->lastY - ypos; // reversed since y-coordinates range from bottom to top
-  this->lastX = xpos;
-  this->lastY = ypos;
-
-  this->camera->lookAround(xOffset, yOffset);
 }
