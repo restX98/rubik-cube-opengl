@@ -33,6 +33,8 @@ int main() {
 
   RubikCube rubikCube(&shader);
 
+  window.setBackgroundColor(0.0901f, 0.0901f, 0.094f);
+
   window.setFramebufferSizeCallback(
     [&camera](GLFWwindow* window, int width, int height) {
       camera.setWindowSize(width, height);

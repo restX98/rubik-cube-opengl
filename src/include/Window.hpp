@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 #include <iostream>
 #include <functional>
 
@@ -27,12 +28,16 @@ public:
 
   void run(std::function<void(float)> renderFunction);
 
+  void setBackgroundColor(float red, float green, float blue, float alpha = 1.0f);
+
   void setKeyCallback(std::function<void(GLFWwindow* window, int key, int scancode, int action, int mods)> callback);
   void setCursorPosCallback(std::function<void(GLFWwindow* window_, double xPos_, double yPos_)> callback);
   void setFramebufferSizeCallback(std::function<void(GLFWwindow* window_, int width, int height)> callback);
   void setMouseButtonCallback(std::function<void(GLFWwindow* window, int button, int state, int mods)> callback);
 
 private:
+  glm::vec4 background;
+
   Event<GLFWwindow*, int, int, int, int> keyEvent;
   Event<GLFWwindow*, double, double> cursorPosEvent;
   Event<GLFWwindow*, int, int, int> mouseButtonEvent;

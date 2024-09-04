@@ -55,13 +55,17 @@ void Window::run(std::function<void(float)> renderFunction) {
   glEnable(GL_DEPTH_TEST);
 
   while (!shouldClose()) {
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(this->background.x, this->background.y, this->background.z, this->background.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     renderFunction(this->deltaTime);
 
     this->updateFrame();
   }
+}
+
+void Window::setBackgroundColor(float red, float green, float blue, float alpha) {
+  this->background = glm::vec4(red, green, blue, alpha);
 }
 
 void Window::setKeyCallback(std::function<void(GLFWwindow* window, int key, int scancode, int action, int mods)> callback) {
