@@ -2,6 +2,9 @@
 
 This is a 3D Rubik's Cube simulation implemented using OpenGL and GLFW. The project is built using CMake.
 
+![Alt Text](./assets/rubik_cube.gif)
+
+
 ## Controls Summary
 
 - **Face Rotation:**
@@ -35,7 +38,7 @@ This is a 3D Rubik's Cube simulation implemented using OpenGL and GLFW. The proj
 1. **Clone the repository:**
 
   ```bash
-  git clone <repository-url>
+  git clone git@github.com:restX98/rubik-cube-opengl.git
   cd rubik-cube-opengl
   ```
 
